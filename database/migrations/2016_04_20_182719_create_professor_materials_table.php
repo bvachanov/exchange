@@ -16,18 +16,18 @@ class CreateProfessorMaterialsTable extends Migration
             $table->increments('id');
             //author, content, type, group, is_public, discipline
             $table->string('name');
-            $table->integer('author')->unsigned();
-            $table->foreign('author')->references('id')
+            $table->integer('author_id')->unsigned();
+            $table->foreign('author_id')->references('id')
                     ->on('users');
-            $table->integer('discipline')->unsigned();
-            $table->foreign('discipline')->references('id')
+            $table->integer('discipline_id')->unsigned();
+            $table->foreign('discipline_id')->references('id')
                     ->on('disciplines');
-            $table->integer('group')->unsigned();
-            $table->foreign('group')->references('id')
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')
                     ->on('groups');
             $table->string('file_name'); //path to file on the disk
-             $table->integer('type')->unsigned();
-            $table->foreign('type')->references('id')
+             $table->integer('type_id')->unsigned();
+            $table->foreign('type_id')->references('id')
                     ->on('disciplines');
             $table->boolean('is_public');
             $table->timestamps();

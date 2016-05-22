@@ -6,13 +6,10 @@
     {!! Form::open(array('url' => 'group/create')) !!}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <div class="row">
-     {!! Form::text('name_bg') !!}       
+     {!! Form::text('name') !!}       
     </div>
     <div class="row">
-     {!! Form::text('name_en') !!}      
-    </div>
-    <div class="row">
-     {!! Form::text('name_de') !!}      
+     {!! Form::textarea('description') !!}      
     </div>
     <div class="row">
      {!! Form::select('discipline', $disciplines, 'Select discipline') !!}      
@@ -21,7 +18,7 @@
     
     @foreach($users as $user)
     <div class="row">
-     <input type="checkbox" name="students[]" value="{{$user->id}}">{{$user->name}}</input>
+     <input type="checkbox" name="students[]" value="{{$user->user_id}}">{{$user->faculty_number}}</input>
     </div>
     @endforeach
     

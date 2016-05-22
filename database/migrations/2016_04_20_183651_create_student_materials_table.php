@@ -22,9 +22,9 @@ class CreateStudentMaterialsTable extends Migration
             $table->integer('discipline')->unsigned();
             $table->foreign('discipline')->references('id')
                     ->on('disciplines');
-            $table->integer('group')->unsigned();
-            $table->foreign('group')->references('id')
-                    ->on('groups');
+            $table->integer('assignment_id')->unsigned();
+            $table->foreign('assignment_id')->references('id')
+                    ->on('professor_materials');
             $table->string('file_name'); //path to file on the disk
             $table->text('feedback');
             $table->timestamps();

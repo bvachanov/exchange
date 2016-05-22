@@ -20,4 +20,6 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 Route::get('group/create', 'GroupController@createGroup');
-    Route::post('group/create', 'GroupController@storeGroup');
+Route::post('group/create', 'GroupController@storeGroup');
+Route::get('group/show/{id}', 'GroupController@showGroup');
+Route::post('group/upload/{id}', 'GroupController@uploadFile');
