@@ -14,14 +14,14 @@ class CreateDisciplinesTable extends Migration
     {
         Schema::create('disciplines', function (Blueprint $table) {
             $table->increments('id');          
-            $table->string('name');
-            $table->string('language');
-            $table->longText('description');
+            $table->string('name', 255);
+            $table->string('language', 10);
+            $table->longText('description', 30000000);
             $table->integer('course_of_studies')->unsigned();
             $table->foreign('course_of_studies')->references('id')
                     ->on('course_of_studies');
             $table->integer('professor_id')->unsigned()->nullable();
-            $table->foreign('professor_id')->references('id')->on('users'); //to fix!!!!
+            $table->foreign('professor_id')->references('id')->on('users'); 
             $table->timestamps();
         });
     }

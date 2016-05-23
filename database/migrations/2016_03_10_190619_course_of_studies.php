@@ -15,9 +15,9 @@ class CourseOfStudies extends Migration
         Schema::create('course_of_studies', function (Blueprint $table) {
             //ime + akademichna stepen
             $table->increments('id');          
-            $table->string('name_bg');
-            $table->string('name_de');
-            $table->string('name_en');
+            $table->string('name_bg', 255);
+            $table->string('name_de', 255);
+            $table->string('name_en', 255);
             $table->integer('academic_degree')->unsigned();
              $table->foreign('academic_degree')->references('id')
                     ->on('academic_degrees');           

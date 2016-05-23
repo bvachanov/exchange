@@ -18,10 +18,10 @@ class GroupToStudent extends Migration
 
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')
-                    ->on('groups');
+                    ->on('groups')->onDelete('cascade');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')
-                    ->on('users');
+                    ->on('users')->onDelete('cascade');
             
  
             $table->timestamps();

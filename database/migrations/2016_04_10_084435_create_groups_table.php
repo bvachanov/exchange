@@ -14,14 +14,14 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->longText('description');
+            $table->string('name', 255);
+            $table->longText('description', 3000000);
             $table->integer('professor_id')->unsigned();
             $table->foreign('professor_id')->references('id')
-                    ->on('users');
+                    ->on('users')->onDelete('cascade');
             $table->integer('discipline_id')->unsigned();
             $table->foreign('discipline_id')->references('id')
-                    ->on('disciplines');
+                    ->on('disciplines')->onDelete('cascade');
                 //teacher, fach, 
             $table->timestamps();
         });

@@ -10,9 +10,9 @@ class AcademicDegrees extends Migration
         Schema::create('academic_degrees', function (Blueprint $table) {
             //ime + bakalavyr/magistyr
             $table->increments('id');          
-            $table->string('name_bg');
-            $table->string('name_de');
-            $table->string('name_en');          
+            $table->string('name_bg', 255);
+            $table->string('name_de', 255);
+            $table->string('name_en', 255);          
         });
     }
 

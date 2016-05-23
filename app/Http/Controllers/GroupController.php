@@ -79,21 +79,21 @@ class GroupController extends Controller {
         return view('groups.showAssignment', compact('assignments', 'assignedTo', 'uploadsToAssignemt'));
     }
 
-    public function uploadFile($id) {
+    public function uploadFile($id, Requests\UploadFileProfessorRequest $request) {
         $group = Group::where('id', $id)->first();
-        $name = Request::input('name');
+        $name = $request->input('name');
         $extension = Input::file('file')->getClientOriginalExtension();
         $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
         $fileName = $name . date('Y-m-d_hi') . '.' . $extension;
         Request::file('file')->move(base_path() . $path, $fileName);
-        $type = Request::input('type');
+        $type = $request->input('type');
         ProfessorMaterial::create([
             'name'=>$name,
             'author_id'=>Auth::id(),
             'group_id'=>$group->id,
             'file_name'=>$fileName,
             'type_id'=>$type,
-            'is_public'=>Request::input('is_public')
+            'is_public'=>$request->input('is_public')
         ]);
          return redirect()->action('GroupController@showGroup', [$group->id]);
     }
