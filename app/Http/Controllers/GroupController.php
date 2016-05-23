@@ -11,6 +11,9 @@ use App\Discipline;
 use App\GroupToStudent;
 use DB;
 use App\MaterialType;
+use Storage;
+use Input;
+use App\ProfessorMaterial;
 
 class GroupController extends Controller {
 
@@ -31,15 +34,16 @@ class GroupController extends Controller {
         return view('group.showGroups', compact('professorsGroups'));
     }
 
-    public function storeGroup() {
+    public function storeGroup(Requests\CreateGroupRequest $request) {
         $group = Group::create([
-                    'name' => Request::input('name'),
-                    'description' => Request::input('description'),
+                    'name' => $request->input('name'),
+                    'description' =>  $request->input('description'),
                     'professor_id' => Auth::id(),
-                    'discipline_id' => Request::input('discipline'),
+                    'discipline_id' =>  $request->input('discipline'),
         ]);
-
-        $students = Request::input('students');
+        $path = '/fileStorage/group_' . $group->id . '_dir';
+        Storage::disk('local')->makeDirectory($path);
+        $students =  $request->input('students');
         foreach ($students as $student) {
             GroupToStudent::create([
                 'group_id' => $group->id,
@@ -57,9 +61,8 @@ class GroupController extends Controller {
         $assignments = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 3)->get();
         $students = DB::table('group_to_student')->where('group_id', $id)
                         ->join('additional_data_students', 'group_to_student.student_id', '=', 'additional_data_students.user_id')->get();
-       $materialTypes= MaterialType::lists('name_bg', 'id');
-        return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline',
-               'materialTypes' ,'assignments', 'students'));
+        $materialTypes = MaterialType::lists('name_bg', 'id');
+        return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline', 'materialTypes', 'assignments', 'students'));
     }
 
     public function showAssignment($id) {
@@ -75,12 +78,24 @@ class GroupController extends Controller {
 
         return view('groups.showAssignment', compact('assignments', 'assignedTo', 'uploadsToAssignemt'));
     }
-    
-    public function uploadFile($id)
-    {
-     $group = Group::where('id', $id)->first();
-     $file= Request::file('file');
-     dd($file);
+
+    public function uploadFile($id) {
+        $group = Group::where('id', $id)->first();
+        $name = Request::input('name');
+        $extension = Input::file('file')->getClientOriginalExtension();
+        $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
+        $fileName = $name . date('Y-m-d_hi') . '.' . $extension;
+        Request::file('file')->move(base_path() . $path, $fileName);
+        $type = Request::input('type');
+        ProfessorMaterial::create([
+            'name'=>$name,
+            'author_id'=>Auth::id(),
+            'group_id'=>$group->id,
+            'file_name'=>$fileName,
+            'type_id'=>$type,
+            'is_public'=>Request::input('is_public')
+        ]);
+         return redirect()->action('GroupController@showGroup', [$group->id]);
     }
 
 }

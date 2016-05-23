@@ -19,9 +19,6 @@ class CreateProfessorMaterialsTable extends Migration
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')->references('id')
                     ->on('users');
-            $table->integer('discipline_id')->unsigned();
-            $table->foreign('discipline_id')->references('id')
-                    ->on('disciplines');
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')
                     ->on('groups');
