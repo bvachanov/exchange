@@ -23,3 +23,7 @@ Route::get('group/create', 'GroupController@createGroup');
 Route::post('group/create', 'GroupController@storeGroup');
 Route::get('group/show/{id}', 'GroupController@showGroup');
 Route::post('group/upload/{id}', 'GroupController@uploadFile');
+Route::get('group/all', 'GroupController@getGroups');
+Route::get('group/file/download/{id}', 'GroupController@downloadFile');
+Route::get('group/file/delete/{id}', 'GroupController@deleteFile');
+

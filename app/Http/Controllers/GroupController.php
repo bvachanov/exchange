@@ -30,20 +30,20 @@ class GroupController extends Controller {
 
     public function getGroups() {
         $id = Auth::id();
-        $professorsGroups = Group::where('professor_id', $id)->get();
-        return view('group.showGroups', compact('professorsGroups'));
+        $groups = Group::where('professor_id', $id)->get();
+        return view('groups.showGroups', compact('groups'));
     }
 
     public function storeGroup(Requests\CreateGroupRequest $request) {
         $group = Group::create([
                     'name' => $request->input('name'),
-                    'description' =>  $request->input('description'),
+                    'description' => $request->input('description'),
                     'professor_id' => Auth::id(),
-                    'discipline_id' =>  $request->input('discipline'),
+                    'discipline_id' => $request->input('discipline'),
         ]);
         $path = '/fileStorage/group_' . $group->id . '_dir';
         Storage::disk('local')->makeDirectory($path);
-        $students =  $request->input('students');
+        $students = $request->input('students');
         foreach ($students as $student) {
             GroupToStudent::create([
                 'group_id' => $group->id,
@@ -84,18 +84,42 @@ class GroupController extends Controller {
         $name = $request->input('name');
         $extension = Input::file('file')->getClientOriginalExtension();
         $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
-        $fileName = $name . date('Y-m-d_hi') . '.' . $extension;
+        $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
         Request::file('file')->move(base_path() . $path, $fileName);
         $type = $request->input('type');
         ProfessorMaterial::create([
-            'name'=>$name,
-            'author_id'=>Auth::id(),
-            'group_id'=>$group->id,
-            'file_name'=>$fileName,
-            'type_id'=>$type,
-            'is_public'=>$request->input('is_public')
+            'name' => $name,
+            'author_id' => Auth::id(),
+            'group_id' => $group->id,
+            'file_name' => $path . $fileName,
+            'type_id' => $type,
+            'is_public' => $request->input('is_public')
         ]);
-         return redirect()->action('GroupController@showGroup', [$group->id]);
+        return redirect()->action('GroupController@showGroup', [$group->id]);
+    }
+
+    public function deleteGroup($id) {
+        $group = Group::where('id', $id)->first();
+        $path = '/fileStorage/group_' . $group->id . '_dir';
+        Storage::disk('local')->deleteDirectory($path);
+        Group::where('id', $id)->delete();
+        return redirect()->action('GroupController@getGroups');
+    }
+
+    public function downloadFile($id) {
+        $file = ProfessorMaterial::where('id', $id)->first();
+        return response()->download(base_path().$file->file_name);
+    }
+
+    public function deleteFile($id) {
+        $file = ProfessorMaterial::where('id', $id)->first();
+        unlink(base_path().$file->file_name);
+        $file->delete();
+        return redirect()->action('GroupController@getGroups');
+    }
+    
+    public function editGroup($id){
+        
     }
 
 }

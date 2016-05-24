@@ -26,9 +26,26 @@
 
     <h2>Lectures:</h2>
     @if(!empty($lectures))
-    @foreach ($lectures as $lecture)
-    <p>{{$lecture->name}}</p>
-    @endforeach
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Uploaded on</th>
+                <th>Download</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>            
+            @foreach ($lectures as $lecture)
+            <tr>
+                <td>{{$lecture->name}}</td>
+                <td>{{$lecture->created_at}}</td>
+                <td><a href="{{url('group/file/download', [$lecture->id])}}"><button>Download file</button></a></td>
+                <td><a href="{{url('group/file/delete', [$lecture->id])}}"><button>Delete file</button></a></td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
     @else
     <p>no lectures</p>
     @endif
