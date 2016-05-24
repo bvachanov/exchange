@@ -27,6 +27,7 @@ class CreateProfessorMaterialsTable extends Migration
             $table->foreign('type_id')->references('id')
                     ->on('material_types');
             $table->boolean('is_public');
+            $table->date('end_date')->nullable();
             $table->timestamps();
         });
     }

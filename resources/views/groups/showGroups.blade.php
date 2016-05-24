@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        @if(!empty($groups))
+        @if(count($groups)>0)
         <table class="table">
             <thead>
                 <tr>

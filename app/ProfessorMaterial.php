@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProfessorMaterial extends Model
 {
-    protected $fillable=['name', 'group_id',  'author_id', 'file_name', 'is_public', 'type_id'];
+    protected $fillable=['name', 'group_id',  'author_id', 'file_name', 'is_public', 'type_id', 'end_date'];
 }

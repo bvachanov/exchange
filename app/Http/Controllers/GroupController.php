@@ -14,6 +14,9 @@ use App\MaterialType;
 use Storage;
 use Input;
 use App\ProfessorMaterial;
+use App\AssignmentToStudent;
+use Carbon\Carbon;
+
 
 class GroupController extends Controller {
 
@@ -24,8 +27,10 @@ class GroupController extends Controller {
 
     public function createGroup() {
         $users = User::where('account_type', 3)->join('additional_data_students', 'users.id', '=', 'additional_data_students.user_id')->get();
+        $coursesOfStudies=DB::table('course_of_studies')->lists('name_bg','id');
+        $years=DB::table('additional_data_students')->distinct()->lists('year','year');
         $disciplines = Discipline::all()->lists('name', 'id');
-        return view('groups.addGroup', compact('users', 'disciplines'));
+        return view('groups.addGroup', compact('users', 'disciplines', 'coursesOfStudies', 'years'));
     }
 
     public function getGroups() {
@@ -59,10 +64,13 @@ class GroupController extends Controller {
         $lectures = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 1)->get();
         $exercises = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 2)->get();
         $assignments = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 3)->get();
+         $others = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 4)->get();
         $students = DB::table('group_to_student')->where('group_id', $id)
                         ->join('additional_data_students', 'group_to_student.student_id', '=', 'additional_data_students.user_id')->get();
         $materialTypes = MaterialType::lists('name_bg', 'id');
-        return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline', 'materialTypes', 'assignments', 'students'));
+        $today=Carbon::today()->format('Y/m/d');
+        return view('groups.showGroup', compact('group', 'lectures', 'exercises',
+                'discipline', 'materialTypes', 'assignments', 'students', 'today', 'others'));
     }
 
     public function showAssignment($id) {
@@ -87,15 +95,37 @@ class GroupController extends Controller {
         $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
         Request::file('file')->move(base_path() . $path, $fileName);
         $type = $request->input('type');
-        ProfessorMaterial::create([
+        $endDate=NULL;    
+        if($request->input('has_end_date')==1)
+        {
+            $endDate=$request->input('end_date');
+        }
+        $material=ProfessorMaterial::create([
             'name' => $name,
             'author_id' => Auth::id(),
             'group_id' => $group->id,
             'file_name' => $path . $fileName,
             'type_id' => $type,
-            'is_public' => $request->input('is_public')
+            'is_public' => $request->input('is_public'),
+            'end_date'=>$endDate,
         ]);
+        if($request->input('is_public')==0)
+        {
+            $this->storeIndividualAssignments($request->input('students'), $material->id);
+        }
+        
         return redirect()->action('GroupController@showGroup', [$group->id]);
+    }
+    
+        private function storeIndividualAssignments($students, $assignmentId)
+    {
+        foreach ($students as $student)
+        {
+            AssignmentToStudent::create([
+                'assignment_id'=>$assignmentId,
+                'student_id'=>$student,
+            ]);
+        }
     }
 
     public function deleteGroup($id) {
@@ -121,5 +151,7 @@ class GroupController extends Controller {
     public function editGroup($id){
         
     }
+    
+
 
 }

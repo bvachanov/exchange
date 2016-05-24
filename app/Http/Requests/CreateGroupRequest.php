@@ -15,7 +15,7 @@ class CreateGroupRequest extends Request {
             'name' => 'required|min:2|max:255',
             'description' => 'required|min:2|max:300000',
             'students' => 'required',
-            'discipline' => 'required',
+            'discipline' => 'required',           
         ];
     }
 

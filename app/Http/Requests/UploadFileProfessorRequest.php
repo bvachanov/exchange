@@ -26,6 +26,9 @@ class UploadFileProfessorRequest extends Request {
             'file' => 'required',
             'type' => 'required',
             'is_public' => 'required',
+            'students' => 'required',
+            'has_end_date'=>'required',
+            'end_date'=>'required',
         ];
     }
 
