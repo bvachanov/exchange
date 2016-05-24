@@ -88,30 +88,33 @@ class GroupController extends Controller {
 
     public function uploadFile($id, Requests\UploadFileProfessorRequest $request) {
         $group = Group::where('id', $id)->first();
-        $name = $request->input('name');
-        $extension = Input::file('file')->getClientOriginalExtension();
-        $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
-        $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
-        Request::file('file')->move(base_path() . $path, $fileName);
-        $type = $request->input('type');
-        $endDate = NULL;
-        if ($request->input('has_end_date') == 1) {
-            $endDate = $request->input('end_date');
-        }
-        $material = ProfessorMaterial::create([
-                    'name' => $name,
-                    'author_id' => Auth::id(),
-                    'group_id' => $group->id,
-                    'file_name' => $path . $fileName,
-                    'type_id' => $type,
-                    'is_public' => $request->input('is_public'),
-                    'end_date' => $endDate,
-        ]);
-        if ($request->input('is_public') == 0) {
-            $this->storeIndividualAssignments($request->input('students'), $material->id);
-        }
+        if ($group->professor_id == Auth::id()) {
+            $name = $request->input('name');
+            $extension = Input::file('file')->getClientOriginalExtension();
+            $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
+            $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
+            Request::file('file')->move(base_path() . $path, $fileName);
+            $type = $request->input('type');
+            $endDate = NULL;
+            if ($request->input('has_end_date') == 1) {
+                $endDate = $request->input('end_date');
+            }
+            $material = ProfessorMaterial::create([
+                        'name' => $name,
+                        'author_id' => Auth::id(),
+                        'group_id' => $group->id,
+                        'file_name' => $path . $fileName,
+                        'type_id' => $type,
+                        'is_public' => $request->input('is_public'),
+                        'end_date' => $endDate,
+            ]);
+            if ($request->input('is_public') == 0) {
+                $this->storeIndividualAssignments($request->input('students'), $material->id);
+            }
 
-        return redirect()->action('GroupController@showGroup', [$group->id]);
+            return redirect()->action('GroupController@showGroup', [$group->id]);
+        }
+        return redirect()->back();
     }
 
     private function storeIndividualAssignments($students, $assignmentId) {
@@ -125,10 +128,13 @@ class GroupController extends Controller {
 
     public function deleteGroup($id) {
         $group = Group::where('id', $id)->first();
-        $path = '/fileStorage/group_' . $group->id . '_dir';
-        Storage::disk('local')->deleteDirectory($path);
-        Group::where('id', $id)->delete();
-        return redirect()->action('GroupController@getGroups');
+        if ($group->professor_id == Auth::id()) {
+            $path = '/fileStorage/group_' . $group->id . '_dir';
+            Storage::disk('local')->deleteDirectory($path);
+            Group::where('id', $id)->delete();
+            return redirect()->action('GroupController@getGroups');
+        }
+        return redirect()->back();
     }
 
     public function downloadFile($id) {
@@ -138,9 +144,12 @@ class GroupController extends Controller {
 
     public function deleteFile($id) {
         $file = ProfessorMaterial::where('id', $id)->first();
-        unlink(base_path() . $file->file_name);
-        $file->delete();
-        return redirect()->action('GroupController@getGroups');
+        if ($file->author_id == Auth::id()) {
+            unlink(base_path() . $file->file_name);
+            $file->delete();
+            return redirect()->action('GroupController@getGroups');
+        }
+        return redirect()->back();
     }
 
     public function editGroup($id) {
