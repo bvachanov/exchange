@@ -19,6 +19,8 @@
 
     <center>Discipline: {{$discipline->name}}</center>
 
+    <center><a href="{{url('group/edit', [$group->id])}}"><button>Edit group</button></center>
+    <center><a href="{{url('group/delete', [$group->id])}}"><button>Delete group</button></a></center>
     <h2>Students:</h2>
     @foreach ($students as $student)
     <p>{{$student->faculty_number}}</p>
