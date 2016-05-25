@@ -43,6 +43,11 @@
             </tbody>
         </table>
     </div>
+    @if(Auth::user()->account_type==1)
+    <div class="row">
+        <center> <a href="{{url('course/create')}}"><button>Add course</button></a> </center>
+    </div>
+    @endif
 </div>
 @endsection
 

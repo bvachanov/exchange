@@ -34,9 +34,14 @@ class CourseController extends Controller {
     }
 
     public function create() {
-        $professors = User::where('account_type', 2)->lists('name', 'id');
-        $courses = DB::table('course_of_studies')->lists('name_bg', 'id');
-        return view('courses.create', compact('professors', 'courses'));
+        if (Auth::user()->account_type == 1) {
+            $professors = User::where('account_type', 2)->lists('name', 'id');
+            $courses = DB::table('course_of_studies')->lists('name_bg', 'id');
+            return view('courses.create', compact('professors', 'courses'));
+        } else {
+            Session::flash('flash_message_error', "You don't have a permission for this operation.");
+            return redirect()->back();
+        }
     }
 
     public function edit($id) {
