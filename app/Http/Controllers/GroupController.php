@@ -60,16 +60,20 @@ class GroupController extends Controller {
 
     public function showGroup($id) {
         $group = Group::where('id', $id)->first();
-        $discipline = Discipline::where('id', $group->discipline_id)->first();
-        $lectures = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 1)->get();
-        $exercises = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 2)->get();
-        $assignments = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 3)->get();
-        $others = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 4)->get();
-        $students = DB::table('group_to_student')->where('group_id', $id)
-                        ->join('additional_data_students', 'group_to_student.student_id', '=', 'additional_data_students.user_id')->get();
-        $materialTypes = MaterialType::lists('name_bg', 'id');
-        $today = Carbon::today()->format('Y/m/d');
-        return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline', 'materialTypes', 'assignments', 'students', 'today', 'others'));
+        if ($group->professor_id == Auth::id()) {
+            $discipline = Discipline::where('id', $group->discipline_id)->first();
+            $lectures = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 1)->get();
+            $exercises = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 2)->get();
+            $assignments = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 3)->get();
+            $others = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 4)->get();
+            $students = DB::table('group_to_student')->where('group_id', $id)
+                            ->join('additional_data_students', 'group_to_student.student_id', '=', 'additional_data_students.user_id')->get();
+            $materialTypes = MaterialType::lists('name_bg', 'id');
+            $today = Carbon::today()->format('Y/m/d');
+            return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline', 'materialTypes', 'assignments', 'students', 'today', 'others'));
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
     }
 
     public function showAssignment($id) {
@@ -114,6 +118,7 @@ class GroupController extends Controller {
 
             return redirect()->action('GroupController@showGroup', [$group->id]);
         }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
 
@@ -134,6 +139,7 @@ class GroupController extends Controller {
             Group::where('id', $id)->delete();
             return redirect()->action('GroupController@getGroups');
         }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
 
@@ -149,6 +155,7 @@ class GroupController extends Controller {
             $file->delete();
             return redirect()->action('GroupController@getGroups');
         }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
 
@@ -193,6 +200,7 @@ class GroupController extends Controller {
             }
             return redirect()->action('GroupController@showGroup', [$id]);
         }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
 

@@ -2,6 +2,9 @@
 @section('content')
 <div class="container">
     <div class="row">
+        @if (Session::has('flash_message_error'))
+            <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
+        @endif
         @if(count($groups)>0)
         <table class="table">
             <thead>
