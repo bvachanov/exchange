@@ -7,7 +7,7 @@ use App\User;
 use Request;
 use App\Group;
 use Auth;
-use App\Discipline;
+use App\Course;
 use App\GroupToStudent;
 use DB;
 use App\MaterialType;
@@ -29,7 +29,7 @@ class GroupController extends Controller {
         $users = User::where('account_type', 3)->join('additional_data_students', 'users.id', '=', 'additional_data_students.user_id')->get();
         $coursesOfStudies = DB::table('course_of_studies')->lists('name_bg', 'id');
         $years = DB::table('additional_data_students')->distinct()->lists('year', 'year');
-        $disciplines = Discipline::all()->lists('name', 'id');
+        $disciplines = Course::all()->lists('name', 'id');
         return view('groups.addGroup', compact('users', 'disciplines', 'coursesOfStudies', 'years'));
     }
 
@@ -44,7 +44,7 @@ class GroupController extends Controller {
                     'name' => $request->input('name'),
                     'description' => $request->input('description'),
                     'professor_id' => Auth::id(),
-                    'discipline_id' => $request->input('discipline'),
+                    'course_id' => $request->input('discipline'),
         ]);
         $path = '/fileStorage/group_' . $group->id . '_dir';
         Storage::disk('local')->makeDirectory($path);
@@ -61,7 +61,7 @@ class GroupController extends Controller {
     public function showGroup($id) {
         $group = Group::where('id', $id)->first();
         if ($group->professor_id == Auth::id()) {
-            $discipline = Discipline::where('id', $group->discipline_id)->first();
+            $discipline = Course::where('id', $group->course_id)->first();
             $lectures = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 1)->get();
             $exercises = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 2)->get();
             $assignments = DB::table('professor_materials')->where('group_id', $id)->where('type_id', 3)->get();
@@ -168,7 +168,7 @@ class GroupController extends Controller {
             $users = User::where('account_type', 3)->join('additional_data_students', 'users.id', '=', 'additional_data_students.user_id')->get();
             $coursesOfStudies = DB::table('course_of_studies')->lists('name_bg', 'id');
             $years = DB::table('additional_data_students')->distinct()->lists('year', 'year');
-            $disciplines = Discipline::all()->lists('name', 'id');
+            $disciplines = Course::all()->lists('name', 'id');
 
             return view('groups.editGroup', compact('group', 'students', 'users', 'years', 'disciplines', 'coursesOfStudies'));
         }
@@ -181,7 +181,7 @@ class GroupController extends Controller {
             Group::where('id', $id)->update([
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
-                'discipline_id' => $request->input('discipline'),
+                'course_id' => $request->input('discipline'),
             ]);
             $students = $request->input('students');
             $oldStudents = GroupToStudent::where('group_id', $id)->lists('student_id');

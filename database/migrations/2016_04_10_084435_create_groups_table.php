@@ -19,9 +19,9 @@ class CreateGroupsTable extends Migration
             $table->integer('professor_id')->unsigned();
             $table->foreign('professor_id')->references('id')
                     ->on('users')->onDelete('cascade');
-            $table->integer('discipline_id')->unsigned();
-            $table->foreign('discipline_id')->references('id')
-                    ->on('disciplines')->onDelete('cascade');
+            $table->integer('course_id')->unsigned();
+            $table->foreign('course_id')->references('id')
+                    ->on('courses')->onDelete('cascade');
                 //teacher, fach, 
             $table->timestamps();
         });

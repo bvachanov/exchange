@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder {
                 $this->call('CourseOfStudiesSeeder');
                 $this->call('MaterialTypeSeeder');
                 $this->call('UserSeeder');
-                $this->call('DisciplinesSeeder');
+                $this->call('CoursesSeeder');
 	}
 
 }

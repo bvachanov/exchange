@@ -28,9 +28,9 @@
         {!! Form::textarea('description', $group->description) !!}      
     </div>
     <div class="row">
-        <p>Discipline:</p>     
+        <p>Course:</p>     
         
-        {!! Form::select('discipline',$disciplines, $group->discipline_id) !!}      
+        {!! Form::select('discipline',$disciplines, $group->course_id) !!}      
     </div>
     
     <div class="row">

@@ -30,7 +30,11 @@ Route::get('group/all', 'GroupController@getGroups');
 Route::get('group/file/download/{id}', 'GroupController@downloadFile');
 Route::get('group/file/delete/{id}', 'GroupController@deleteFile');
 
-Route::get('discipline/all', 'DisciplineController@showAll');
-Route::get('discipline/show/{id}', 'DisciplineController@show');
-Route::get('discipline/create', 'DisciplineController@create');
+Route::get('course/all', 'CourseController@showAll');
+Route::get('course/show/{id}', 'CourseController@show');
+Route::get('course/create', 'CourseController@create');
+Route::post('course/create', 'CourseController@store');
+Route::get('course/edit/{id}', 'CourseController@edit');
+Route::post('course/edit/{id}', 'CourseController@update');
+Route::get('course/delete/{id}', 'CourseController@delete');
 

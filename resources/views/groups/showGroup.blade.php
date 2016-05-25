@@ -20,9 +20,9 @@
 
     <center>Description: {{$group->description}}</center>
 
-    <center>Discipline: {{$discipline->name}}</center>
+    <center>Group: {{$discipline->name}}</center>
 
-    <center><a href="{{url('group/edit', [$group->id])}}"><button>Edit group</button></center>
+    <center><a href="{{url('group/edit', [$group->id])}}"><button>Edit group</button></a></center>
     <center><a href="{{url('group/delete', [$group->id])}}"><button>Delete group</button></a></center>
     <h2>Students:</h2>
     @foreach ($students as $student)

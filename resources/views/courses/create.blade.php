@@ -16,7 +16,7 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
     
-    {!! Form::open(array('url' => 'discipline/create')) !!}
+    {!! Form::open(array('url' => 'course/create')) !!}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <div class="row">
         <p>Name:</p>
@@ -34,11 +34,11 @@
     
     <div class="row">
             <p>Course:</p>
-           {!! Form::select('courseOfStudies', $courses, ['id'=>'course']) !!}          
+           {!! Form::select('course_of_studies', $courses, ['id'=>'course']) !!}          
     </div>
     
     <div class="row">
-            <p>Proffesor:</p>
+            <p>Professor:</p>
            {!! Form::select('professor', $professors, ['id'=>'professor']) !!}          
     </div>
     

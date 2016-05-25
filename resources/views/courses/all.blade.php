@@ -27,31 +27,19 @@
                     <th>Professor</th>
                     <th>Course of studies</th>
                     <th>Academic Degree</th>
-                    @if(Auth::id()== $discipline->professor_id)
-                    <th>Edit</th>
-                    @endif
-                    @if(Auth::user()->account_type== 1)
-                    <th>Edit</th>
-                    <th>Delete</th>
-                    @endif
                 </tr>
             </thead>
             <tbody>
+                @foreach($courses as $course)
                 <tr>
-                    <td>{{$discipline->name}}</td>
-                    <td>{{$discipline->language}}</td>
-                    <td>{{$discipline->description}}</td>
-                    <td>{{$professor->academic_title." ".$professor->first_name. " ".$professor->last_name }}</td>
+                    <td><a href="{{url('course/show', [$course->id])}}">{{$course->name}}</a></td>
+                    <td>{{$course->language}}</td>
+                    <td>{{$course->description}}</td>
+                    <td>{{$course->academic_title." ".$course->first_name. " ".$course->last_name }}</td>
                     <td>{{$course->name_bg}}</td>
-                    <td>{{$degree->name_bg}}</td>
-                     @if(Auth::id()== $discipline->professor_id)
-                    <td>Edit</td>
-                    @endif
-                    @if(Auth::user()->account_type== 1)
-                    <td>Edit</td>
-                    <td>Delete</td>
-                    @endif
+                    <td>{{$course->acad_bg}}</td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

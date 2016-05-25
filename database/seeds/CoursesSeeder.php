@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DisciplinesSeeder extends Seeder {
+class CoursesSeeder extends Seeder {
 
     /**
      * Run the database seeds.
@@ -10,8 +10,8 @@ class DisciplinesSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        DB::table('disciplines')->delete();
-        DB::table('disciplines')->insert([
+        DB::table('courses')->delete();
+        DB::table('courses')->insert([
             ['professor_id' => 2, 'name' => 'Mathematik 1', 'language' => 'Deutsch',
                 'description'=>'bla bla bla bla bla bla bla bla bla bla bla bla'
                 . ' bla bla bla bla ','course_of_studies'=>1], 
