@@ -53,6 +53,7 @@ Route::post('course/edit/{id}', 'CourseController@update');
 Route::get('course/delete/{id}', 'CourseController@delete');
 
 Route::get('user/show/{id}', 'UserController@show');
+Route::get('user/uploads/student', 'UserController@showStudentUploads');
 
 Route::get('studgroup/all', 'GroupController@getGroups');
 Route::get('studgroup/show/{id}', 'GroupController@showGroup');

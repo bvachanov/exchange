@@ -15,6 +15,9 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="/group/all">My Groups</a></li>
                         <li><a href="/course/all">Courses</a></li>
+                        @if(Auth::user()->account_type==3)
+                        <li><a href='{{url('user/uploads/student')}}'>My uploads</a></li>
+                        @endif
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
