@@ -134,5 +134,62 @@ class GroupController extends Controller {
         Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
+    
+    public function downloadExerciseSolution($id) {
+        $isAuthor = ExerciseSolution::where('author_id', Auth::id())->count();
+        if ($isAuthor > 0 || Auth::user()->account_type == 2) {
+            $file = ExerciseSolution::where('id', $id)->first();
+            return response()->download(base_path() . $file->file_name);
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
+    }
+    
+    public function deleteExerciseSolution($id) {
+        $file = ExerciseSolution::where('id', $id)->first();
+        if ($file->author_id == Auth::id()) {
+            unlink(base_path() . $file->file_name);
+            $file->delete();
+            return redirect()->back();
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
+    }
+
+    public function showExercise($id) {
+        $assignedTo = ExerciseToStudent::where('exercise_id', $id)->where('student_id', Auth::id())->count();
+        if ($assignedTo > 0) {
+            $exercise = Exercise::where('id', $id)->first();
+            $solutions = ExerciseSolution::where('exercise_id', $id)
+                            ->where('author_id', Auth::id())->get();
+            return view('exercises.showExerciseUser', compact('exercise', 'solutions'));
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
+    }
+
+    public function uploadExercise($id, Requests\UploadAssignmentRequest $request) {
+
+        $assignedTo = ExerciseToStudent::where('exercise_id', $id)->where('student_id', Auth::id())->count();
+        if ($assignedTo > 0) {
+            $exercise = Exercise::where('id', $id)->first();
+            $name = $exercise->name . DB::table('additional_data_students')
+                            ->where('user_id', Auth::id())->pluck('faculty_number');
+            $extension = Input::file('file')->getClientOriginalExtension();
+            $path = '/storage/app/fileStorage/group_' . $exercise->group_id . '_dir/';
+            $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
+            Request::file('file')->move(base_path() . $path, $fileName);
+            ExerciseSolution::create([
+                'name' => $name,
+                'author_id' => Auth::id(),
+                'exercise_id' => $exercise->id,
+                'file_name' => $path . $fileName,
+                'feedback' => '',
+            ]);
+            return redirect()->back();
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
+    }
 
 }

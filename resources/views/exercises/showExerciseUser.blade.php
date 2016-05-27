@@ -16,7 +16,7 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
     
-    <h1>Assignment details</h1>
+    <h1>Exercise details</h1>
     <table class="table">
         <thead>
             <tr>
@@ -29,10 +29,10 @@
         <tbody>
             
             <tr>
-                <td>{{$assignment->name}}</td>
-                <td>{{$assignment->created_at}}</td>
-                <td>{{$assignment->end_date}}</td>
-                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>Download file</button></a></td>              
+                <td>{{$exercise->name}}</td>
+                <td>{{$exercise->created_at}}</td>
+                <td>{{$exercise->end_date}}</td>
+                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>Download file</button></a></td>              
             </tr>
             
         </tbody>
@@ -54,8 +54,8 @@
             <tr>
                 <td>{{$solution->created_at}}</td>
                 <td>{{$solution->feedback}}</td>
-                <td><a href="{{url('group/file/download/assignment/solution', [$solution->id])}}"><button>Download file</button></a></td>  
-                <td><a href="{{url('group/file/delete/assignment/solution', [$solution->id])}}"><button>Delete file</button></a></td>
+                <td><a href="{{url('group/file/download/exercise/solution', [$solution->id])}}"><button>Download file</button></a></td>  
+                <td><a href="{{url('group/file/delete/exercise/solution', [$solution->id])}}"><button>Delete file</button></a></td>
             </tr> 
             @endforeach
         </tbody>
@@ -63,6 +63,6 @@
     @else
     <p>No solutions uploaded.</p>
     @endif
-  @include('assignments.uploadAssignment')  
+  @include('exercises.uploadExerciseSolution')  
 </div>
 @endsection

@@ -34,6 +34,9 @@ Route::get('group/file/download/assignment/{id}', 'GroupController@downloadAssig
 Route::get('group/file/download/assignment/solution/{id}', 'GroupController@downloadAssignmentSolution');
 Route::get('group/file/delete/assignment/solution/{id}', 'GroupController@deleteAssignmentSolution');
 
+Route::get('group/file/download/exercise/solution/{id}', 'GroupController@downloadExerciseSolution');
+Route::get('group/file/delete/exercise/solution/{id}', 'GroupController@deleteExerciseSolution');
+
 Route::get('group/file/download/other/{id}', 'GroupController@downloadOther');
 Route::get('group/file/delete/lecture/{id}', 'ProfessorGroupController@deleteLecture');
 Route::get('group/file/delete/exercise/{id}', 'ProfessorGroupController@deleteExercise');
@@ -51,6 +54,11 @@ Route::get('course/delete/{id}', 'CourseController@delete');
 
 Route::get('user/show/{id}', 'UserController@show');
 
+Route::get('studgroup/all', 'GroupController@getGroups');
 Route::get('studgroup/show/{id}', 'GroupController@showGroup');
+
 Route::get('studassignment/show/{id}', 'GroupController@showAssignment');
 Route::post('studassignment/upload/{id}', 'GroupController@uploadAssignment');
+
+Route::get('studexercise/show/{id}', 'GroupController@showExercise');
+Route::post('studexercise/upload/{id}', 'GroupController@uploadExercise');
