@@ -32,9 +32,16 @@ class GroupController extends Controller {
 
     public function getGroups() {
         $id = Auth::id();
-        $groups = Group::join('group_to_student', 'group_to_student.group_id', '=', 'group.id')
-                        ->where('student_id', $id)->select('group.id', 'descrtipion', 'name', 'professor_id')->get();
-        return view('groups.showGroups', compact('groups'));
+        $groups = Group::join('group_to_student', 'groups.id','=','group_to_student.group_id')
+                ->where('student_id', $id)->get();
+        $courses=[];
+        $professors=[];
+        foreach ($groups as $group)
+        {
+            $courses[$group->id]=DB::table('courses')->where('id', $group->course_id)->first();
+            $professors[$group->id]=DB::table('additional_data_professors')->where('user_id', $group->professor_id)->first();
+        }
+        return view('groups.showGroupsStudent', compact('groups', 'professors', 'courses'));
     }
 
     public function showGroup($id) {

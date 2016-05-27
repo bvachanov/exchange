@@ -13,10 +13,14 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="/">Home</a></li>
+                        @if(Auth::user()->account_type==2)
                         <li><a href="/group/all">My Groups</a></li>
+                        @endif
                         <li><a href="/course/all">Courses</a></li>
                         @if(Auth::user()->account_type==3)
+                        <li><a href='{{url('studgroup/all')}}'>My groups</a></li>
                         <li><a href='{{url('user/uploads/student')}}'>My uploads</a></li>
+                        <li><a href='{{url('user/unresolved/student')}}'>Unresolved tasks</a></li>                       
                         @endif
                     </ul>
 
