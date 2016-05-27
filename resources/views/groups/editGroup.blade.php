@@ -46,9 +46,8 @@
     </div>
 
     <div class="row">
-        <p>Results:</p>
     @foreach($users as $user)
-    <div class="row" id='student{{$user->user_id}}'>
+    <div class="col-md-2 col-sm-3 col-sm-6" id='student{{$user->user_id}}'>
         <input type="checkbox" name="students[]" id='studentCheck{{$user->user_id}}' value="{{$user->user_id}}">{{$user->faculty_number}}</input>
     </div>
     @endforeach

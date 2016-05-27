@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UploadFileProfessorRequest extends Request {
+class UploadAssignmentRequest extends Request {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +21,8 @@ class UploadFileProfessorRequest extends Request {
      * @return array
      */
     public function rules() {
-        return [
-            'name' => 'required|min:2|max:255',
-            'file' => 'required',
-            'type' => 'required',
-            'students' => 'required',
-            'end_date'=>'required',
+        return [            
+            'file' => 'required',            
         ];
     }
 

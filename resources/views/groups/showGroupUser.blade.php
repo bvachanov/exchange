@@ -21,15 +21,10 @@
     <center>Description: {{$group->description}}</center>
 
     <center>Course: {{$discipline->name}}</center>
+    
+    <center>Professor: {{$professor->academic_title.' '.$professor->first_name.' '.$professor->last_name}}</center>
 
-    <center><a href="{{url('group/edit', [$group->id])}}"><button>Edit group</button></a></center>
-    <center><a href="{{url('group/delete', [$group->id])}}"><button>Delete group</button></a></center>
-    <h2>Students:</h2>
-    <div class="row">
-        @foreach ($students as $student)
-        <div class="col-md-2 col-sm-3 col-sm-6">{{$student->faculty_number}}</div>
-        @endforeach
-    </div>
+   
 
     <h2>Lectures:</h2>
     @if(!empty($lectures))
@@ -39,7 +34,6 @@
                 <th>Name</th>
                 <th>Uploaded on</th>
                 <th>Download</th>
-                <th>Delete</th>
             </tr>
         </thead>
         <tbody>            
@@ -47,8 +41,7 @@
             <tr>
                 <td>{{$lecture->name}}</td>
                 <td>{{$lecture->created_at}}</td>
-                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button>Download file</button></a></td>
-                <td><a href="{{url('group/file/delete/lecture', [$lecture->id])}}"><button>Delete file</button></a></td>
+                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button>Download file</button></a></td>             
             </tr>
             @endforeach
         </tbody>
@@ -65,9 +58,7 @@
                 <th>Name</th>
                 <th>Uploaded on</th>
                 <th>End Date</th>
-                <th>Assigned to</th>
                 <th>Download</th>
-                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -76,11 +67,7 @@
                 <td>{{$exercise->name}}</td>
                 <td>{{$exercise->created_at}}</td>
                 <td>{{$exercise->end_date}}</td>
-                <td>@foreach( $studentsToExercise[$exercise->id] as $ex)
-                    {{$ex. " "}}
-                @endforeach</td>
-                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>Download file</button></a></td>
-                <td><a href="{{url('group/file/delete/exercise', [$exercise->id])}}"><button>Delete file</button></a></td>
+                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>Download file</button></a></td>              
             </tr>
             @endforeach
         </tbody>
@@ -97,9 +84,7 @@
                 <th>Name</th>
                 <th>Uploaded on</th>
                 <th>End Date</th>
-                <th>Assigned to</th>
                 <th>Download</th>
-                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -108,11 +93,7 @@
                 <td>{{$assignment->name}}</td>
                 <td>{{$assignment->created_at}}</td>
                 <td>{{$assignment->end_date}}</td>
-                <td>@foreach( $studentsToAssignment[$assignment->id] as $ass)
-                    {{$ass. " "}}
-                @endforeach</td>
-                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>Download file</button></a></td>
-                <td><a href="{{url('group/file/delete/assignment', [$assignment->id])}}"><button>Delete file</button></a></td>
+                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>Download file</button></a></td>              
             </tr>
             @endforeach
         </tbody>
@@ -129,7 +110,6 @@
                 <th>Name</th>
                 <th>Uploaded on</th>
                 <th>Download</th>
-                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -138,7 +118,7 @@
                 <td>{{$other->name}}</td>
                 <td>{{$other->created_at}}</td>
                 <td><a href="{{url('group/file/download/other', [$other->id])}}"><button>Download file</button></a></td>
-                <td><a href="{{url('group/file/delete/other', [$other->id])}}"><button>Delete file</button></a></td>
+              
             </tr>
             @endforeach
         </tbody>
@@ -147,9 +127,6 @@
     <p>no other uploads</p>
     @endif
 
-    <!-- lectures, exercises, assignments -->
-
-    @include('groups.upload')
 </div>
 @endsection
 

@@ -18,7 +18,7 @@ class AssignmentToStudent extends Migration {
 
             $table->integer('assignment_id')->unsigned();
             $table->foreign('assignment_id')->references('id')
-                    ->on('professor_materials')->onDelete('cascade');
+                    ->on('assignments')->onDelete('cascade');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')
                     ->on('users')->onDelete('cascade');

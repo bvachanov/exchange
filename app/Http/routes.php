@@ -19,16 +19,27 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-Route::get('group/create', 'GroupController@createGroup');
-Route::post('group/create', 'GroupController@storeGroup');
-Route::get('group/show/{id}', 'GroupController@showGroup');
-Route::post('group/upload/{id}', 'GroupController@uploadFile');
-Route::get('group/edit/{id}', 'GroupController@editGroup');
-Route::post('group/edit/{id}', 'GroupController@storeEdited');
-Route::get('group/delete/{id}', 'GroupController@deleteGroup');
-Route::get('group/all', 'GroupController@getGroups');
-Route::get('group/file/download/{id}', 'GroupController@downloadFile');
-Route::get('group/file/delete/{id}', 'GroupController@deleteFile');
+Route::get('group/create', 'ProfessorGroupController@createGroup');
+Route::post('group/create', 'ProfessorGroupController@storeGroup');
+Route::get('group/show/{id}', 'ProfessorGroupController@showGroup');
+Route::post('group/upload/{id}', 'ProfessorGroupController@uploadFile');
+Route::get('group/edit/{id}', 'ProfessorGroupController@editGroup');
+Route::post('group/edit/{id}', 'ProfessorGroupController@storeEdited');
+Route::get('group/delete/{id}', 'ProfessorGroupController@deleteGroup');
+Route::get('group/all', 'ProfessorGroupController@getGroups');
+Route::get('group/file/download/lecture/{id}', 'GroupController@downloadLecture');
+Route::get('group/file/download/exercise/{id}', 'GroupController@downloadExercise');
+
+Route::get('group/file/download/assignment/{id}', 'GroupController@downloadAssignment');
+Route::get('group/file/download/assignment/solution/{id}', 'GroupController@downloadAssignmentSolution');
+Route::get('group/file/delete/assignment/solution/{id}', 'GroupController@deleteAssignmentSolution');
+
+Route::get('group/file/download/other/{id}', 'GroupController@downloadOther');
+Route::get('group/file/delete/lecture/{id}', 'ProfessorGroupController@deleteLecture');
+Route::get('group/file/delete/exercise/{id}', 'ProfessorGroupController@deleteExercise');
+Route::get('group/file/delete/assignment/{id}', 'ProfessorGroupController@deleteAssignment');
+Route::get('group/file/delete/other/{id}', 'ProfessorGroupController@deleteOther');
+
 
 Route::get('course/all', 'CourseController@showAll');
 Route::get('course/show/{id}', 'CourseController@show');
@@ -40,3 +51,6 @@ Route::get('course/delete/{id}', 'CourseController@delete');
 
 Route::get('user/show/{id}', 'UserController@show');
 
+Route::get('studgroup/show/{id}', 'GroupController@showGroup');
+Route::get('studassignment/show/{id}', 'GroupController@showAssignment');
+Route::post('studassignment/upload/{id}', 'GroupController@uploadAssignment');

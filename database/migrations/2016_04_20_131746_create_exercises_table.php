@@ -3,18 +3,16 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfessorMaterialsTable extends Migration
-{
+class CreateExercisesTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('professor_materials', function (Blueprint $table) {
+    public function up() {
+        Schema::create('exercises', function(Blueprint $table) {
             $table->increments('id');
-            //author, content, type, group, is_public, discipline
             $table->string('name', 255);
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')->references('id')
@@ -22,7 +20,8 @@ class CreateProfessorMaterialsTable extends Migration
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')
                     ->on('groups')->onDelete('cascade');
-            $table->string('file_name', 1000); //path to file on the disk            
+            $table->string('file_name', 1000); //path to file on the disk
+            $table->date('end_date');
             $table->timestamps();
         });
     }
@@ -32,8 +31,8 @@ class CreateProfessorMaterialsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::drop('professor_materials');
+    public function down() {
+        Schema::drop('exercises');
     }
+
 }

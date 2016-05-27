@@ -10,21 +10,19 @@
         {!! Form::file('file') !!}      
     </div>
     <div class="row">
-        {!! Form::select('type', $materialTypes, 'Select type') !!}      
+        {!! Form::select('type',  $materialTypes, null,['id'=>'type', 'placeholder'=>'Select type']) !!}      
     </div>
     
-    <div class="row">
-        {!!Form::hidden('has_end_date',0)!!}
-        <input type="checkbox" name='has_end_date' id='hasDueDate' value="1" checked="true">Has End Date</input>
+    <div class="row" id='datepickerRow' style="display:none;">
         <p>Date: <input type="text" name='end_date' id="datepicker" readonly="readonly" value="{{$today}}"></p>
     </div>
     
-        <div class="row">
+    <div class="row" id='studentsDiv' style="display: none;">
         {!!Form::hidden('is_public',0)!!}
         <input type="checkbox" name="is_public" id='assignToAllCheckbox' value="1" checked="true">all students</input>
         <div class="row" id='studentsCheckboxes' style="display: none;">
             @foreach($students as $student)
-            <div class="row">
+            <div class="col-md-2 col-sm-3 col-sm-6">
                 <input type="checkbox" name="students[]" value="{{$student->user_id}}" checked="true">{{$student->faculty_number}}</input>
             </div>
             @endforeach
@@ -51,11 +49,14 @@
                 $("#studentsCheckboxes").show();
             }
         });
-        $('#hasDueDate').change(function () {
-            if ($(this).is(':checked')) {
-                $("#datepicker").show();
+        $('#type').change(function () {
+            if ( $(this).val()==1 || $(this).val()==4 ) {
+                $("#datepickerRow").hide();
+                $("#studentsDiv").hide();
+                
             } else {
-                $("#datepicker").hide();
+                $("#datepickerRow").show();
+                $("#studentsDiv").show();
             }
         });
 
