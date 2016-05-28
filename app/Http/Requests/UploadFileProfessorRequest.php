@@ -23,7 +23,7 @@ class UploadFileProfessorRequest extends Request {
     public function rules() {
         return [
             'name' => 'required|min:2|max:255',
-            'file' => 'required',
+            'file' => 'required|max:20000',
             'type' => 'required',
             'students' => 'required',
             'end_date'=>'required',
