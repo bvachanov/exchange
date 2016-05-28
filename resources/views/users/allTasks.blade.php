@@ -18,7 +18,7 @@
 
 
     <div class="row">
-        <h1>All exercises:</h1>
+        <h1>All exercises:</h1>       
         @if(count($exercises)>0)
         <table class="table">
             <thead>
