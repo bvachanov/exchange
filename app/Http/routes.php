@@ -49,6 +49,8 @@ Route::post('group/assignment/feedback/{id}', 'ProfessorGroupController@storeAss
 Route::get('group/exercise/show/{id}', 'ProfessorGroupController@showExercise');
 Route::post('group/exercise/feedback/{id}', 'ProfessorGroupController@storeExerciseFeedback');
 
+Route::get('professor/allTasks', 'ProfessorController@showAllTasks');
+
 Route::get('course/all', 'CourseController@showAll');
 Route::get('course/show/{id}', 'CourseController@show');
 Route::get('course/create', 'CourseController@create');

@@ -16,6 +16,8 @@
                 @if (!Auth::guest())
                 @if(Auth::user()->account_type==2)
                 <li><a href="/group/all">My Groups</a></li>
+                <li><a href='{{url('professor/allTasks')}}'>All Tasks</a></li>
+                
                 @endif
                 <li><a href="/course/all">Courses</a></li>
                 @if(Auth::user()->account_type==3)
