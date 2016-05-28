@@ -73,7 +73,7 @@
         <tbody>
             @foreach ($exercises as $exercise)
             <tr>
-                <td>{{$exercise->name}}</td>
+                <td><a href="{{url('group/exercise/show', [$exercise->id])}}">{{$exercise->name}}</a></td>
                 <td>{{$exercise->created_at}}</td>
                 <td>{{$exercise->end_date}}</td>
                 <td>@foreach( $studentsToExercise[$exercise->id] as $ex)
@@ -105,7 +105,7 @@
         <tbody>
             @foreach ($assignments as $assignment)
             <tr>
-                <td>{{$assignment->name}}</td>
+                <td><a href="{{url('group/assignment/show', [$assignment->id])}}">{{$assignment->name}}</a></td>
                 <td>{{$assignment->created_at}}</td>
                 <td>{{$assignment->end_date}}</td>
                 <td>@foreach( $studentsToAssignment[$assignment->id] as $ass)

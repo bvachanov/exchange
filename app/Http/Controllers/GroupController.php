@@ -86,7 +86,7 @@ class GroupController extends Controller {
     }
 
     public function downloadAssignmentSolution($id) {
-        $isAuthor = AssignmentSolution::where('author_id', Auth::id())->count();
+        $isAuthor = AssignmentSolution::where('author_id', Auth::id())->count();        
         if ($isAuthor > 0 || Auth::user()->account_type == 2) {
             $file = AssignmentSolution::where('id', $id)->first();
             return response()->download(base_path() . $file->file_name);

@@ -43,6 +43,11 @@ Route::get('group/file/delete/exercise/{id}', 'ProfessorGroupController@deleteEx
 Route::get('group/file/delete/assignment/{id}', 'ProfessorGroupController@deleteAssignment');
 Route::get('group/file/delete/other/{id}', 'ProfessorGroupController@deleteOther');
 
+Route::get('group/assignment/show/{id}', 'ProfessorGroupController@showAssignment');
+Route::post('group/assignment/feedback/{id}', 'ProfessorGroupController@storeAssignmentFeedback');
+
+Route::get('group/exercise/show/{id}', 'ProfessorGroupController@showExercise');
+Route::post('group/exercise/feedback/{id}', 'ProfessorGroupController@storeExerciseFeedback');
 
 Route::get('course/all', 'CourseController@showAll');
 Route::get('course/show/{id}', 'CourseController@show');

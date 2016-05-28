@@ -33,7 +33,7 @@
                 <tr>
                     <td><a href="{{url('studexercise/show', [$exTask[$ex->id]->id])}}">{{$exTask[$ex->id]->name}}</a></td>
                     <td><a href='{{url('studgroup/show', [$exGroup[$ex->id]->id])}}'>{{$exGroup[$ex->id]->name}}</a></td>
-                    <td>{{$ex->end_date}}</td>
+                    <td>{{$exTask[$ex->id]->end_date}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -59,7 +59,7 @@
                 <tr>
                     <td><a href="{{url('studassignment/show', [$assignTask[$a->id]->id])}}">{{$assignTask[$a->id]->name}}</a></td>
                     <td><a href='{{url('studgroup/show', [$assignGroup[$a->id]->id])}}'>{{$assignGroup[$a->id]->name}}</a></td>
-                    <td>{{$a->end_date}}</td>
+                    <td>{{$assignTask[$a->id]->end_date}}</td>
                 </tr>
                 @endforeach
             </tbody>

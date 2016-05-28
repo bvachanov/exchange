@@ -22,7 +22,6 @@ use App\Assignment;
 use App\Exercise;
 use App\ExerciseToStudent;
 
-
 class ProfessorGroupController extends Controller {
 
     public function __construct() {
@@ -70,18 +69,16 @@ class ProfessorGroupController extends Controller {
             $lectures = DB::table('lectures')->where('group_id', $id)->get();
             $exercises = DB::table('exercises')->where('group_id', $id)->get();
             $assignments = DB::table('assignments')->where('group_id', $id)->get();
-            $studentsToExercise=[];
-            $studentsToAssignment=[];
-            foreach ($exercises as $exercise)
-            {
-                $studentsToExercise[$exercise->id]=  ExerciseToStudent::where('exercise_id', $exercise->id)
+            $studentsToExercise = [];
+            $studentsToAssignment = [];
+            foreach ($exercises as $exercise) {
+                $studentsToExercise[$exercise->id] = ExerciseToStudent::where('exercise_id', $exercise->id)
                         ->join('additional_data_students', 'additional_data_students.user_id', '=', 'exercise_to_student.student_id')
                         ->lists('faculty_number');
             }
-           
-            foreach ($assignments as $assignment)
-            {
-                $studentsToAssignment[$assignment->id]= AssignmentToStudent::where('assignment_id', $assignment->id)
+
+            foreach ($assignments as $assignment) {
+                $studentsToAssignment[$assignment->id] = AssignmentToStudent::where('assignment_id', $assignment->id)
                         ->join('additional_data_students', 'additional_data_students.user_id', '=', 'assignment_to_student.student_id')
                         ->lists('faculty_number');
             }
@@ -90,44 +87,90 @@ class ProfessorGroupController extends Controller {
                             ->join('additional_data_students', 'group_to_student.student_id', '=', 'additional_data_students.user_id')->get();
             $materialTypes = MaterialType::lists('name_bg', 'id');
             $today = Carbon::today()->format('Y/m/d');
-            return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline', 'materialTypes', 'assignments', 'students', 'today',
-                    'others', 'studentsToExercise', 'studentsToAssignment'));
+            return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline', 'materialTypes', 'assignments', 'students', 'today', 'others', 'studentsToExercise', 'studentsToAssignment'));
         }
         Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
 
     public function showAssignment($id) {
-        $assignments = DB::table('professor_materials')->where('id', $id)->get();
-        $assignedTo = [];
-        $uploadsToAssignemt = [];
-        foreach ($assignments as $assignment) {
-            $uploadsToAssignemt[$assignment->id] = DB::table('assignment_solutions')
-                            ->join('additional_data_students', 'additional_data_students.id', '=', 'student_materials.user_id')
-                            ->where('assignment_id', $assignment->id)->get();
-            $assignedTo[$assignment->id] = DB::table('assignment_to_student')->where('assignment_id', $assignment->id)->get();
-        }
 
-        return view('groups.showAssignment', compact('assignments', 'assignedTo', 'uploadsToAssignemt'));
+        $assignment = DB::table('assignments')->where('id', $id)->first();
+        if ($assignment->author_id == Auth::id()) {
+            $authors=[];
+            $uploadsToAssignment = DB::table('assignment_solutions')                            
+                            ->where('assignment_id', $assignment->id)->get();
+            foreach ($uploadsToAssignment as $u)
+            {
+                $authors[$u->id]= DB::table('additional_data_students')->where('user_id', $u->author_id)->first();
+            }
+            $assignedTo = DB::table('assignment_to_student')->where('assignment_id', $assignment->id)
+                            ->join('additional_data_students', 'additional_data_students.user_id', '=', 'assignment_to_student.student_id')->get();
+            return view('groups.showAssignment', compact('assignment', 'assignedTo','authors',  'uploadsToAssignment'));
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
+    }
+    
+    public function storeAssignmentFeedback($id, Requests\StoreFeedbackRequest $request){
+        $solution =  \App\AssignmentSolution::where('id', $id)->first();
+        $task=  Assignment::where('id', $solution->assignment_id)->first();
+        if($task->author_id==Auth::id())
+        {
+            $solution->feedback=$request->input('feedback');
+            $solution->save();
+            return redirect()->back();
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
+    }
+    
+    public function showExercise($id) {
+
+        $exercise = DB::table('exercises')->where('id', $id)->first();
+        if ($exercise->author_id == Auth::id()) {
+            $authors=[];
+            $uploadsToExercise = DB::table('exercise_solutions')                            
+                            ->where('exercise_id', $exercise->id)->get();
+            foreach ($uploadsToExercise as $u)
+            {
+                $authors[$u->id]= DB::table('additional_data_students')->where('user_id', $u->author_id)->first();
+            }
+            $assignedTo = DB::table('exercise_to_student')->where('exercise_id', $exercise->id)
+                            ->join('additional_data_students', 'additional_data_students.user_id', '=', 'exercise_to_student.student_id')->get();
+            return view('groups.showExercise', compact('exercise', 'assignedTo','authors',  'uploadsToExercise'));
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
+    }
+    
+    public function storeExerciseFeedback($id, Requests\StoreFeedbackRequest $request){
+        $solution =  \App\ExerciseSolution::where('id', $id)->first();
+        $task=  Assignment::where('id', $solution->exercise_id)->first();
+        if($task->author_id==Auth::id())
+        {
+            $solution->feedback=$request->input('feedback');
+            $solution->save();
+            return redirect()->back();
+        }
+        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        return redirect()->back();
     }
 
     public function uploadFile($id, Requests\UploadFileProfessorRequest $request) {
         $group = Group::where('id', $id)->first();
         if ($group->professor_id == Auth::id()) {
             $type = $request->input('type');
-            if($type==1){
-                $this->storeLecture ($request, $group);
-            }
-            else if($type==2){
-                $this->storeExercise ($request, $group);
-            }
-            else if($type==3){
+            if ($type == 1) {
+                $this->storeLecture($request, $group);
+            } else if ($type == 2) {
+                $this->storeExercise($request, $group);
+            } else if ($type == 3) {
                 $this->storeAssignment($request, $group);
-            }
-            else {
+            } else {
                 $this->storeOtherMaterial($request, $group);
             }
-                          
+
 
             return redirect()->action('ProfessorGroupController@showGroup', [$group->id]);
         }
@@ -135,48 +178,50 @@ class ProfessorGroupController extends Controller {
         return redirect()->back();
     }
 
-    private function storeLecture($request, $group){
-            $name = $request->input('name');
-            $extension = Input::file('file')->getClientOriginalExtension();
-            $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
-            $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
-            Request::file('file')->move(base_path() . $path, $fileName);           
-             Lecture::create([
-                        'name' => $name,
-                        'author_id' => Auth::id(),
-                        'group_id' => $group->id,
-                        'file_name' => $path . $fileName,
-            ]);           
+    private function storeLecture($request, $group) {
+        $name = $request->input('name');
+        $extension = Input::file('file')->getClientOriginalExtension();
+        $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
+        $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
+        Request::file('file')->move(base_path() . $path, $fileName);
+        Lecture::create([
+            'name' => $name,
+            'author_id' => Auth::id(),
+            'group_id' => $group->id,
+            'file_name' => $path . $fileName,
+        ]);
     }
-        private function storeOtherMaterial($request, $group){
-            $name = $request->input('name');
-            $extension = Input::file('file')->getClientOriginalExtension();
-            $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
-            $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
-            Request::file('file')->move(base_path() . $path, $fileName);           
-            ProfessorMaterial::create([
-                        'name' => $name,
-                        'author_id' => Auth::id(),
-                        'group_id' => $group->id,
-                        'file_name' => $path . $fileName,
-            ]);           
+
+    private function storeOtherMaterial($request, $group) {
+        $name = $request->input('name');
+        $extension = Input::file('file')->getClientOriginalExtension();
+        $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
+        $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
+        Request::file('file')->move(base_path() . $path, $fileName);
+        ProfessorMaterial::create([
+            'name' => $name,
+            'author_id' => Auth::id(),
+            'group_id' => $group->id,
+            'file_name' => $path . $fileName,
+        ]);
     }
-        private function storeAssignment($request, $group){
-            $name = $request->input('name');
-            $extension = Input::file('file')->getClientOriginalExtension();
-            $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
-            $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
-            Request::file('file')->move(base_path() . $path, $fileName);           
-             $material=Assignment::create([
-                        'name' => $name,
-                        'author_id' => Auth::id(),
-                        'group_id' => $group->id,
-                        'file_name' => $path . $fileName,
-                        'end_date'=>$request->input('end_date'),
-            ]);
-             $this->storeIndividualAssignments($request->input('students'), $material->id);
+
+    private function storeAssignment($request, $group) {
+        $name = $request->input('name');
+        $extension = Input::file('file')->getClientOriginalExtension();
+        $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
+        $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
+        Request::file('file')->move(base_path() . $path, $fileName);
+        $material = Assignment::create([
+                    'name' => $name,
+                    'author_id' => Auth::id(),
+                    'group_id' => $group->id,
+                    'file_name' => $path . $fileName,
+                    'end_date' => $request->input('end_date'),
+        ]);
+        $this->storeIndividualAssignments($request->input('students'), $material->id);
     }
-    
+
     private function storeIndividualAssignments($students, $assignmentId) {
         foreach ($students as $student) {
             AssignmentToStudent::create([
@@ -185,23 +230,23 @@ class ProfessorGroupController extends Controller {
             ]);
         }
     }
-    
-            private function storeExercise($request, $group){
-            $name = $request->input('name');
-            $extension = Input::file('file')->getClientOriginalExtension();
-            $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
-            $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
-            Request::file('file')->move(base_path() . $path, $fileName);           
-             $material=Exercise::create([
-                        'name' => $name,
-                        'author_id' => Auth::id(),
-                        'group_id' => $group->id,
-                        'file_name' => $path . $fileName,
-                        'end_date'=>$request->input('end_date'),
-            ]);
-             $this->storeIndividualExercises($request->input('students'), $material->id);
+
+    private function storeExercise($request, $group) {
+        $name = $request->input('name');
+        $extension = Input::file('file')->getClientOriginalExtension();
+        $path = '/storage/app/fileStorage/group_' . $group->id . '_dir/';
+        $fileName = $name . "-" . date('Y-m-d_hi') . '.' . $extension;
+        Request::file('file')->move(base_path() . $path, $fileName);
+        $material = Exercise::create([
+                    'name' => $name,
+                    'author_id' => Auth::id(),
+                    'group_id' => $group->id,
+                    'file_name' => $path . $fileName,
+                    'end_date' => $request->input('end_date'),
+        ]);
+        $this->storeIndividualExercises($request->input('students'), $material->id);
     }
-    
+
     private function storeIndividualExercises($students, $exerciseId) {
         foreach ($students as $student) {
             ExerciseToStudent::create([
@@ -223,8 +268,6 @@ class ProfessorGroupController extends Controller {
         return redirect()->back();
     }
 
-
-
     public function deleteLecture($id) {
         $file = Lecture::where('id', $id)->first();
         if ($file->author_id == Auth::id()) {
@@ -235,6 +278,7 @@ class ProfessorGroupController extends Controller {
         Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
+
     public function deleteOther($id) {
         $file = ProfessorMaterial::where('id', $id)->first();
         if ($file->author_id == Auth::id()) {
@@ -245,6 +289,7 @@ class ProfessorGroupController extends Controller {
         Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
+
     public function deleteExercise($id) {
         $file = Exercise::where('id', $id)->first();
         if ($file->author_id == Auth::id()) {
@@ -255,6 +300,7 @@ class ProfessorGroupController extends Controller {
         Session::flash('flash_message_error', "You don't have a permission for this operation.");
         return redirect()->back();
     }
+
     public function deleteAssignment($id) {
         $file = Assignment::where('id', $id)->first();
         if ($file->author_id == Auth::id()) {
