@@ -1,5 +1,5 @@
 <div class="row">
-    <h2>Upload file:</h2>
+    <h2>{{trans('translations.uploadSolution')}}</h2>
 
     {!! Form::open(array('url' => array('studexercise/upload', $exercise->id ), 'files' => true )) !!}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -9,7 +9,7 @@
     </div>
    
     <div class="row">
-        {!! Form::submit('Upload') !!}
+        {!! Form::submit(trans('translations.upload')) !!}
 
     </div>
 

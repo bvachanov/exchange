@@ -17,17 +17,17 @@
     @endif
 
 
+<h1>{{trans('translations.unresolved')}}</h1>
     <div class="row">
-        <h1>Unresolved exercises:</h1>
+        <h2>{{trans('translations.exercises')}}</h2>
         @if(count($exercises)>0)
         <table class="table">
             <thead>
                 <tr>
-                    <th>Exercise Details</th>
-                    <th>Group</th>
-                    <th>End date</th>
-                </tr>
-            </thead>
+                    <th>{{trans('translations.exerciseDetails')}}</th>
+                    <th>{{trans('translations.group')}}</th>
+                    <th>{{trans('translations.endDate')}}</th>
+            <thed>
             <tbody>
                 @foreach($exercises as $ex)
                 <tr>
@@ -39,19 +39,19 @@
             </tbody>
         </table>
         @else
-        <p>No exercise uploads.</p>
+        <p>{{trans('translations.allExercisesResolved')}}</p>
         @endif
     </div>
     
      <div class="row">
-        <h1>Unresolved assignments:</h1>
+        <h2>{{trans('translations.assignments')}}</h2>
         @if(count($assignments)>0)
         <table class="table">
             <thead>
                 <tr>
-                    <th>Assignment Details</th>
-                    <th>Group</th>
-                    <th>End date</th>
+                    <th>{{trans('translations.assignmentDetails')}}</th>
+                    <th>{{trans('translations.group')}}</th>
+                    <th>{{trans('translations.endDate')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +65,7 @@
             </tbody>
         </table>
         @else
-        <p>No unresolved assignment.</p>
+         <p>{{trans('translations.allAssignmentsResolved')}}</p>
         @endif
     </div>
 

@@ -35,7 +35,7 @@
                     <td><a href="{{url('course/show', [$course->id])}}">{{$course->name}}</a></td>
                     <td>{{$course->language}}</td>
                     <td>{{$course->description}}</td>
-                    <td>{{$course->academic_title." ".$course->first_name. " ".$course->last_name }}</td>
+                    <td><a href='{{url('/user/show', $course->user_id)}}'>{{$course->academic_title." ".$course->first_name. " ".$course->last_name }}</a></td>
                     <td>{{$course->course_name}}</td>
                     <td>{{$course->acad}}</td>
                 </tr>

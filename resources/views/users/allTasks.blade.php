@@ -16,17 +16,17 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
 
-
+    <h1>{{trans('translations.allTasks')}}</h1>
     <div class="row">
-        <h1>All exercises:</h1>       
+        <h2>{{trans('translations.allExercises')}}</h2>       
         @if(count($exercises)>0)
         <table class="table">
             <thead>
                 <tr>
-                    <th>Exercise Details</th>
-                    <th>Group</th>
-                    <th>End date</th>
-                    <th>Count of not reviewed</th>
+                    <th>{{trans('translations.exerciseDetails')}}</th>
+                    <th>{{trans('translations.group')}}</th>
+                    <th>{{trans('translations.endDate')}}</th>
+                    <th>{{trans('translations.countOfNotReviewed')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,20 +41,20 @@
             </tbody>
         </table>
         @else
-        <p>No exercises.</p>
+        <p>{{trans('translations.noExercises')}}</p>
         @endif
     </div>
     
      <div class="row">
-        <h1>All assignments:</h1>
+        <h2>{{trans('translations.allAssignments')}}</h2>
         @if(count($assignments)>0)
         <table class="table">
             <thead>
                 <tr>
-                    <th>Assignment Details</th>
-                    <th>Group</th>
-                    <th>End date</th>
-                    <th>Count of not reviewed</th>
+                    <<th>{{trans('translations.assignmentDetails')}}</th>
+                    <th>{{trans('translations.group')}}</th>
+                    <th>{{trans('translations.endDate')}}</th>
+                    <th>{{trans('translations.countOfNotReviewed')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,7 +69,7 @@
             </tbody>
         </table>
         @else
-        <p>No assignments.</p>
+        <p>{{trans('translations.noAssignments')}}</p>
         @endif
     </div>
 

@@ -42,7 +42,7 @@
                     <td>{{$course->name}}</td>
                     <td>{{$course->language}}</td>
                     <td>{{$course->description}}</td>
-                    <td>{{$professor->academic_title." ".$professor->first_name. " ".$professor->last_name }}</td>
+                    <td><a href='{{url('/user/show', $professor->user_id)}}'>{{$professor->academic_title.' '.$professor->first_name.' '.$professor->last_name}}</a></td>
                     <td>{{$courseOfStudies->name}}</td>
                     <td>{{$degree->name}}</td>
                      @if(Auth::id()== $course->professor_id)

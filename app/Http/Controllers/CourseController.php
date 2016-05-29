@@ -22,7 +22,7 @@ class CourseController extends Controller {
         $courses = Course::join('additional_data_professors', 'courses.professor_id', '=', 'additional_data_professors.user_id')
                         ->join('course_of_studies', 'course_of_studies.id', '=', 'courses.course_of_studies')
                         ->join('academic_degrees', 'course_of_studies.academic_degree', '=', 'academic_degrees.id')
-                        ->select('courses.id', 'language', 'name', 'description', 'academic_title', 'first_name', 'last_name', 'academic_degrees.' . $nameLoc . ' as acad', 'course_of_studies.' . $nameLoc . ' as course_name')->get();
+                        ->select('courses.id', 'language', 'name', 'description', 'academic_title','user_id', 'first_name', 'last_name', 'academic_degrees.' . $nameLoc . ' as acad', 'course_of_studies.' . $nameLoc . ' as course_name')->get();
         return view('courses.all', compact('courses'));
     }
 

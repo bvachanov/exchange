@@ -16,31 +16,31 @@
         <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
 
-    <center><h1>Edit Group</h1></center>
+    <center><h1>{{trans('translations.editGroup')}}</h1></center>
     {!! Form::open(array('url' => array('group/edit', $group->id))) !!}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <div class="row">
-        <p>Name:</p>
+        <p>{{trans('translations.name')}}:</p>
         {!! Form::text('name', $group->name) !!}       
     </div>
     <div class="row">
-        <p>Description:</p>
+        <p>{{trans('translations.description')}}:</p>
         {!! Form::textarea('description', $group->description) !!}      
     </div>
     <div class="row">
-        <p>Course:</p>     
+        <p>{{trans('translations.course')}}:</p>     
         
         {!! Form::select('discipline',$disciplines, $group->course_id) !!}      
     </div>
     
     <div class="row">
-        <p>Students:</p>
+        <p>{{trans('translations.students')}}:</p>
         <div class="col-md-6">
-            <p>Course:</p>
+            <p>{{trans('translations.courseOfStudies')}}:</p>
            {!! Form::select('coursesOfStudies', [0=>'All'] + $coursesOfStudies, null, ['id'=>'course']) !!}  
         </div>
         <div class="col-md-6">
-            <p>Year:</p>
+            <p>{{trans('translations.year')}}:</p>
            {!! Form::select('years',[0=>'All'] + $years, null,  ['id'=>'year']) !!}  
         </div>   
     </div>
@@ -48,12 +48,12 @@
     <div class="row">
     @foreach($users as $user)
     <div class="col-md-2 col-sm-3 col-sm-6" id='student{{$user->user_id}}'>
-        <input type="checkbox" name="students[]" id='studentCheck{{$user->user_id}}' value="{{$user->user_id}}">{{$user->faculty_number}}</input>
+        <input type="checkbox" name="students[]" id='studentCheck{{$user->user_id}}' value="{{$user->user_id}}"><a href='{{url('/user/show', $user->user_id)}}'>{{$user->faculty_number}}</a></input>
     </div>
     @endforeach
     </div>
     <div class="row">
-        {!! Form::submit('submit') !!}
+        {!! Form::submit(trans('translations.store')) !!}
 
     </div>
 

@@ -16,14 +16,14 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
     
-    <h1>Assignment details</h1>
+    <h1>{{trans('translations.assignmentDetails')}}</h1>
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Uploaded on</th>
-                <th>End Date</th>
-                <th>Download</th>
+                <th>{{trans('translations.name')}}</th>
+                <th>{{trans('translations.uploadedOn')}}</th>
+                <th>{{trans('translations.endDate')}}</th>
+                <th>{{trans('translations.download')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -32,21 +32,21 @@
                 <td>{{$assignment->name}}</td>
                 <td>{{$assignment->created_at}}</td>
                 <td>{{$assignment->end_date}}</td>
-                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>Download file</button></a></td>              
+                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>{{trans('translations.download')}}</button></a></td>              
             </tr>
             
         </tbody>
     </table>
     
-    <h>Uploaded solutions:</h>
+      <h1>{{trans('translations.solutions')}}</h1>
     @if(count($solutions)>0)
     <table class="table">
         <thead>
             <tr>
-                <th>Uploaded on</th>
-                <th>Feedback</th>
-                <th>Download</th> 
-                <th>Delete</th>
+                <th>{{trans('translations.uploadedOn')}}</th>
+                <th>{{trans('translations.feedback')}}</th>
+                <th>{{trans('translations.download')}}</th> 
+                <th>{{trans('translations.delete')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -54,14 +54,14 @@
             <tr>
                 <td>{{$solution->created_at}}</td>
                 <td>{{$solution->feedback}}</td>
-                <td><a href="{{url('group/file/download/assignment/solution', [$solution->id])}}"><button>Download file</button></a></td>  
-                <td><a href="{{url('group/file/delete/assignment/solution', [$solution->id])}}"><button>Delete file</button></a></td>
+                <td><a href="{{url('group/file/download/exercise/solution', [$solution->id])}}"><button>{{trans('translations.download')}}</button></a></td>  
+                <td><a href="{{url('group/file/delete/exercise/solution', [$solution->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
             </tr> 
             @endforeach
         </tbody>
     </table>
     @else
-    <p>No solutions uploaded.</p>
+    <p>{{trans('translations.noSolutions')}}</p>
     @endif
   @include('assignments.uploadAssignment')  
 </div>

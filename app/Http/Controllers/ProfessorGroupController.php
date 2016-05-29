@@ -76,13 +76,13 @@ class ProfessorGroupController extends Controller {
             foreach ($exercises as $exercise) {
                 $studentsToExercise[$exercise->id] = ExerciseToStudent::where('exercise_id', $exercise->id)
                         ->join('additional_data_students', 'additional_data_students.user_id', '=', 'exercise_to_student.student_id')
-                        ->lists('faculty_number');
+                        ->select('faculty_number', 'user_id')->get();
             }
 
             foreach ($assignments as $assignment) {
                 $studentsToAssignment[$assignment->id] = AssignmentToStudent::where('assignment_id', $assignment->id)
                         ->join('additional_data_students', 'additional_data_students.user_id', '=', 'assignment_to_student.student_id')
-                        ->lists('faculty_number');
+                        ->select('faculty_number', 'user_id')->get();
             }
             $others = DB::table('professor_materials')->where('group_id', $id)->get();
             $students = DB::table('group_to_student')->where('group_id', $id)

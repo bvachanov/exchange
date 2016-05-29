@@ -16,6 +16,7 @@ use App\Group;
 use Auth;
 use App\AssignmentToStudent;
 use App\ExerciseToStudent;
+use Session;
 
 class UserController extends Controller {
 

@@ -16,24 +16,25 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
 
-    <center>Name: {{$group->name}}</center>
+   <center><h1>{{trans('translations.showGroup')}}</h1></center>
+    <center>{{trans('translations.name')}}: {{$group->name}}</center>
 
-    <center>Description: {{$group->description}}</center>
+    <center>{{trans('translations.description')}}: {{$group->description}}</center>
 
-    <center>Course: {{$discipline->name}}</center>
+    <center>{{trans('translations.course')}}: {{$discipline->name}}</center>
     
-    <center>Professor: {{$professor->academic_title.' '.$professor->first_name.' '.$professor->last_name}}</center>
+    <center>{{trans('translations.prof')}}: <a href='{{url('/user/show', $professor->user_id)}}'>{{$professor->academic_title.' '.$professor->first_name.' '.$professor->last_name}}</a> </center>
 
    
 
-    <h2>Lectures:</h2>
+<h2>{{trans('translations.lectures')}}:</h2>
     @if(!empty($lectures))
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Uploaded on</th>
-                <th>Download</th>
+                <th>{{trans('translations.name')}}</th>
+                <th>{{trans('translations.uploadedOn')}}</th>
+                <th>{{trans('translations.download')}}</th>
             </tr>
         </thead>
         <tbody>            
@@ -41,24 +42,24 @@
             <tr>
                 <td>{{$lecture->name}}</td>
                 <td>{{$lecture->created_at}}</td>
-                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button>Download file</button></a></td>             
+                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button>{{trans('translations.download')}}</button></a></td>             
             </tr>
             @endforeach
         </tbody>
     </table>
     @else
-    <p>no lectures</p>
+    <p>{{trans('translations.noLectures')}}</p>
     @endif
 
-    <h2>Exercises:</h2>
+    <h2>{{trans('translations.exercises')}}:</h2>
     @if(!empty($exercises))
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Uploaded on</th>
-                <th>End Date</th>
-                <th>Download</th>
+                <th>{{trans('translations.name')}}</th>
+                <th>{{trans('translations.uploadedOn')}}</th>
+                <th>{{trans('translations.endDate')}}</th>
+                <th>{{trans('translations.download')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -67,24 +68,24 @@
                 <td><a href="{{url('studexercise/show', [$exercise->id])}}">{{$exercise->name}}</a></td>
                 <td>{{$exercise->created_at}}</td>
                 <td>{{$exercise->end_date}}</td>
-                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>Download file</button></a></td>              
+                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>{{trans('translations.download')}}</button></a></td>              
             </tr>
             @endforeach
         </tbody>
     </table>
     @else
-    <p>no exercises</p>
+    <p>{{trans('translations.noExercises')}}</p>
     @endif
 
-    <h2>Assignments:</h2>
+    <h2>{{trans('translations.assignments')}}:</h2>
     @if(!empty($assignments))
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Uploaded on</th>
-                <th>End Date</th>
-                <th>Download</th>
+                <th>{{trans('translations.name')}}</th>
+                <th>{{trans('translations.uploadedOn')}}</th>
+                <th>{{trans('translations.endDate')}}</th>
+                <th>{{trans('translations.download')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -93,16 +94,16 @@
                 <td><a href="{{url('studassignment/show', [$assignment->id])}}">{{$assignment->name}}</a></td>
                 <td>{{$assignment->created_at}}</td>
                 <td>{{$assignment->end_date}}</td>
-                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>Download file</button></a></td>              
+                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>{{trans('translations.download')}}</button></a></td>              
             </tr>
             @endforeach
         </tbody>
     </table>
     @else
-    <p>no assignments</p>
+    <p>{{trans('translations.noAssignments')}}</p>
     @endif
 
-    <h2>Other:</h2>
+    <h2>{{trans('translations.others')}}:</h2>
     @if(!empty($others))
     <table class="table">
         <thead>
@@ -117,14 +118,14 @@
             <tr>
                 <td>{{$other->name}}</td>
                 <td>{{$other->created_at}}</td>
-                <td><a href="{{url('group/file/download/other', [$other->id])}}"><button>Download file</button></a></td>
+                <td><a href="{{url('group/file/download/other', [$other->id])}}"><button>{{trans('translations.download')}}</button></a></td>
               
             </tr>
             @endforeach
         </tbody>
     </table>
     @else
-    <p>no other uploads</p>
+    <p>{{trans('translations.noOthers')}}</p>
     @endif
 
 </div>

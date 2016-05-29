@@ -16,22 +16,22 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
 
-
+    <h1>{{trans('translations.userDetails')}}</h1>
     <div class="row">
-        <p>Name: {{$user->name}}</p>
-        <p>Email: {{$user->email}}</p>
-        <p>Account type: {{$accountType}}</p>
+        <p>{{trans('translations.name')}}: {{$user->name}}</p>
+        <p>{{trans('translations.email')}}: {{$user->email}}</p>
+        <p>{{trans('translations.accType')}}: {{$accountType}}</p>
         @if($user->account_type==2)
-        <p>Academic title: {{$additionalData->academic_title}}</p>
-        <p>First name: {{$additionalData->first_name}}</p>
-        <p>Last name: {{$additionalData->last_name}}</p>
+        <p>{{trans('translations.acadTitle')}}: {{$additionalData->academic_title}}</p>
+        <p>{{trans('translations.firstName')}}: {{$additionalData->first_name}}</p>
+        <p>{{trans('translations.lastName')}}: {{$additionalData->last_name}}</p>
         @elseif ($user->account_type==3)
-        <p>First name: {{$additionalData->first_name}}</p>
-        <p>Last name: {{$additionalData->last_name}}</p>
-        <p>Faculty number: {{$additionalData->faculty_number}}</p>
-        <p>Year: {{$additionalData->year}}</p>
-        <p>Academical group: {{$additionalData->group_number}}</p>
-        <p>Course of studies: {{$courseOfStudies}}</p>
+        <p>{{trans('translations.firstName')}}: {{$additionalData->first_name}}</p>
+        <p>{{trans('translations.lastName')}}: {{$additionalData->last_name}}</p>
+        <p>{{trans('translations.facNumber')}}: {{$additionalData->faculty_number}}</p>
+        <p>{{trans('translations.year')}}: {{$additionalData->year}}</p>
+        <p>{{trans('translations.acadGroup')}}: {{$additionalData->group_number}}</p>
+        <p>{{trans('translations.courseOfStudies')}}: {{$courseOfStudies}}</p>
         @endif
     </div>
 </div>
