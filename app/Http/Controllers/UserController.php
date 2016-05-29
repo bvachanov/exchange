@@ -25,7 +25,9 @@ class UserController extends Controller {
 
     public function show($id) {
         $user = User::where('id', $id)->first();
-        $accountType = AccountType::where('id', $user->account_type)->pluck('name_bg');
+        $locale=Session::get('locale');
+        $nameLoc='name_'.$locale;
+        $accountType = AccountType::where('id', $user->account_type)->pluck($nameLoc);
         $additionalData = '';
         $courseOfStudies = '';
         if ($user->account_type == 2) {
@@ -35,7 +37,7 @@ class UserController extends Controller {
             $additionalData = DB::table('additional_data_students')->
                             where('user_id', $id)->first();
             $courseOfStudies = DB::table('course_of_studies')->where('id', $additionalData->course_of_studies)
-                    ->pluck('name_bg');
+                    ->pluck($nameLoc);
         }
         return view('users.show', compact('user', 'additionalData', 'accountType', 'courseOfStudies'));
     }

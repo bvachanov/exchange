@@ -31,7 +31,9 @@ class ProfessorGroupController extends Controller {
 
     public function createGroup() {
         $users = User::where('account_type', 3)->join('additional_data_students', 'users.id', '=', 'additional_data_students.user_id')->get();
-        $coursesOfStudies = DB::table('course_of_studies')->lists('name_bg', 'id');
+        $locale = Session::get('locale');
+        $nameLoc = 'name_' . $locale;
+        $coursesOfStudies = DB::table('course_of_studies')->lists($nameLoc, 'id');
         $years = DB::table('additional_data_students')->distinct()->lists('year', 'year');
         $disciplines = Course::all()->lists('name', 'id');
         return view('groups.addGroup', compact('users', 'disciplines', 'coursesOfStudies', 'years'));
@@ -85,11 +87,13 @@ class ProfessorGroupController extends Controller {
             $others = DB::table('professor_materials')->where('group_id', $id)->get();
             $students = DB::table('group_to_student')->where('group_id', $id)
                             ->join('additional_data_students', 'group_to_student.student_id', '=', 'additional_data_students.user_id')->get();
-            $materialTypes = MaterialType::lists('name_bg', 'id');
+            $locale = Session::get('locale');
+            $nameLoc = 'name_' . $locale;
+            $materialTypes = MaterialType::lists($nameLoc, 'id');
             $today = Carbon::today()->format('Y/m/d');
             return view('groups.showGroup', compact('group', 'lectures', 'exercises', 'discipline', 'materialTypes', 'assignments', 'students', 'today', 'others', 'studentsToExercise', 'studentsToAssignment'));
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -97,63 +101,59 @@ class ProfessorGroupController extends Controller {
 
         $assignment = DB::table('assignments')->where('id', $id)->first();
         if ($assignment->author_id == Auth::id()) {
-            $authors=[];
-            $uploadsToAssignment = DB::table('assignment_solutions')                            
+            $authors = [];
+            $uploadsToAssignment = DB::table('assignment_solutions')
                             ->where('assignment_id', $assignment->id)->get();
-            foreach ($uploadsToAssignment as $u)
-            {
-                $authors[$u->id]= DB::table('additional_data_students')->where('user_id', $u->author_id)->first();
+            foreach ($uploadsToAssignment as $u) {
+                $authors[$u->id] = DB::table('additional_data_students')->where('user_id', $u->author_id)->first();
             }
             $assignedTo = DB::table('assignment_to_student')->where('assignment_id', $assignment->id)
                             ->join('additional_data_students', 'additional_data_students.user_id', '=', 'assignment_to_student.student_id')->get();
-            return view('groups.showAssignment', compact('assignment', 'assignedTo','authors',  'uploadsToAssignment'));
+            return view('groups.showAssignment', compact('assignment', 'assignedTo', 'authors', 'uploadsToAssignment'));
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
-    
-    public function storeAssignmentFeedback($id, Requests\StoreFeedbackRequest $request){
-        $solution =  \App\AssignmentSolution::where('id', $id)->first();
-        $task=  Assignment::where('id', $solution->assignment_id)->first();
-        if($task->author_id==Auth::id())
-        {
-            $solution->feedback=$request->input('feedback');
+
+    public function storeAssignmentFeedback($id, Requests\StoreFeedbackRequest $request) {
+        $solution = \App\AssignmentSolution::where('id', $id)->first();
+        $task = Assignment::where('id', $solution->assignment_id)->first();
+        if ($task->author_id == Auth::id()) {
+            $solution->feedback = $request->input('feedback');
             $solution->save();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
-    
+
     public function showExercise($id) {
 
         $exercise = DB::table('exercises')->where('id', $id)->first();
         if ($exercise->author_id == Auth::id()) {
-            $authors=[];
-            $uploadsToExercise = DB::table('exercise_solutions')                            
+            $authors = [];
+            $uploadsToExercise = DB::table('exercise_solutions')
                             ->where('exercise_id', $exercise->id)->get();
-            foreach ($uploadsToExercise as $u)
-            {
-                $authors[$u->id]= DB::table('additional_data_students')->where('user_id', $u->author_id)->first();
+            foreach ($uploadsToExercise as $u) {
+                $authors[$u->id] = DB::table('additional_data_students')->where('user_id', $u->author_id)->first();
             }
             $assignedTo = DB::table('exercise_to_student')->where('exercise_id', $exercise->id)
                             ->join('additional_data_students', 'additional_data_students.user_id', '=', 'exercise_to_student.student_id')->get();
-            return view('groups.showExercise', compact('exercise', 'assignedTo','authors',  'uploadsToExercise'));
+            return view('groups.showExercise', compact('exercise', 'assignedTo', 'authors', 'uploadsToExercise'));
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
-    
-    public function storeExerciseFeedback($id, Requests\StoreFeedbackRequest $request){
-        $solution =  \App\ExerciseSolution::where('id', $id)->first();
-        $task=  Assignment::where('id', $solution->exercise_id)->first();
-        if($task->author_id==Auth::id())
-        {
-            $solution->feedback=$request->input('feedback');
+
+    public function storeExerciseFeedback($id, Requests\StoreFeedbackRequest $request) {
+        $solution = \App\ExerciseSolution::where('id', $id)->first();
+        $task = Assignment::where('id', $solution->exercise_id)->first();
+        if ($task->author_id == Auth::id()) {
+            $solution->feedback = $request->input('feedback');
             $solution->save();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -174,7 +174,7 @@ class ProfessorGroupController extends Controller {
 
             return redirect()->action('ProfessorGroupController@showGroup', [$group->id]);
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -264,7 +264,7 @@ class ProfessorGroupController extends Controller {
             Group::where('id', $id)->delete();
             return redirect()->action('ProfessorGroupController@getGroups');
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -275,7 +275,7 @@ class ProfessorGroupController extends Controller {
             $file->delete();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -286,7 +286,7 @@ class ProfessorGroupController extends Controller {
             $file->delete();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -297,7 +297,7 @@ class ProfessorGroupController extends Controller {
             $file->delete();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -308,7 +308,7 @@ class ProfessorGroupController extends Controller {
             $file->delete();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -319,7 +319,9 @@ class ProfessorGroupController extends Controller {
             $students = DB::table('group_to_student')->where('group_id', $id)
                             ->join('additional_data_students', 'group_to_student.student_id', '=', 'additional_data_students.user_id')->get();
             $users = User::where('account_type', 3)->join('additional_data_students', 'users.id', '=', 'additional_data_students.user_id')->get();
-            $coursesOfStudies = DB::table('course_of_studies')->lists('name_bg', 'id');
+            $locale = Session::get('locale');
+            $nameLoc = 'name_' . $locale;
+            $coursesOfStudies = DB::table('course_of_studies')->lists($nameLoc, 'id');
             $years = DB::table('additional_data_students')->distinct()->lists('year', 'year');
             $disciplines = Course::all()->lists('name', 'id');
 
@@ -353,7 +355,7 @@ class ProfessorGroupController extends Controller {
             }
             return redirect()->action('ProfessorGroupController@showGroup', [$id]);
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 

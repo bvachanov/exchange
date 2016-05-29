@@ -16,17 +16,17 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
 
-
+    <h1>{{trans('translations.allCourses')}}</h1>
     <div class="table-responsive">
         <table class='table'>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Language</th>
-                    <th>Description</th>
-                    <th>Professor</th>
-                    <th>Course of studies</th>
-                    <th>Academic Degree</th>
+                    <th>{{trans('translations.name')}}</th>
+                    <th>{{trans('translations.lang')}}</th>
+                    <th>{{trans('translations.description')}}</th>
+                    <th>{{trans('translations.prof')}}</th>
+                    <th>{{trans('translations.courseOfStudies')}}</th>
+                    <th>{{trans('translations.degree')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,8 +36,8 @@
                     <td>{{$course->language}}</td>
                     <td>{{$course->description}}</td>
                     <td>{{$course->academic_title." ".$course->first_name. " ".$course->last_name }}</td>
-                    <td>{{$course->name_bg}}</td>
-                    <td>{{$course->acad_bg}}</td>
+                    <td>{{$course->course_name}}</td>
+                    <td>{{$course->acad}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -45,7 +45,7 @@
     </div>
     @if(Auth::user()->account_type==1)
     <div class="row">
-        <center> <a href="{{url('course/create')}}"><button>Add course</button></a> </center>
+        <center> <a href="{{url('course/create')}}"><button>{{trans('translations.addCourse')}}</button></a> </center>
     </div>
     @endif
 </div>

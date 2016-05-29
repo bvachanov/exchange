@@ -15,35 +15,35 @@
     @if (Session::has('flash_message_error'))
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
-    
+    <h1>{{trans('translations.addCourse')}}</h1>
     {!! Form::open(array('url' => 'course/create')) !!}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <div class="row">
-        <p>Name:</p>
+        <p>{{trans('translations.name')}}:</p>
         {!! Form::text('name') !!}       
     </div>
      <div class="row">
-        <p>Language:</p>
+        <p>{{trans('translations.lang')}}:</p>
         {!! Form::text('language') !!}       
     </div>
     <div class="row">
-        <p>Description:</p>
+        <p>{{trans('translations.description')}}:</p>
         {!! Form::textarea('description') !!}      
     </div>
     
     
     <div class="row">
-            <p>Course:</p>
+            <p>{{trans('translations.courseOfStudies')}}:</p>
            {!! Form::select('course_of_studies', $courses, ['id'=>'course']) !!}          
     </div>
     
     <div class="row">
-            <p>Professor:</p>
+            <p>{{trans('translations.prof')}}:</p>
            {!! Form::select('professor', $professors, ['id'=>'professor']) !!}          
     </div>
     
     <div class="row">
-        {!! Form::submit('submit') !!}
+        {!! Form::submit(trans('translations.store')) !!}
 
     </div>
 

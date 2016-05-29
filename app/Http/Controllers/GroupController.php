@@ -61,7 +61,7 @@ class GroupController extends Controller {
             $others = DB::table('professor_materials')->where('group_id', $id)->get();
             return view('groups.showGroupUser', compact('group', 'lectures', 'exercises', 'discipline', 'assignments', 'others', 'professor'));
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -91,7 +91,7 @@ class GroupController extends Controller {
             $file = AssignmentSolution::where('id', $id)->first();
             return response()->download(base_path() . $file->file_name);
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
     
@@ -102,7 +102,7 @@ class GroupController extends Controller {
             $file->delete();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -114,7 +114,7 @@ class GroupController extends Controller {
                             ->where('author_id', Auth::id())->get();
             return view('assignments.showAssignmentUser', compact('assignment', 'solutions'));
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -138,7 +138,7 @@ class GroupController extends Controller {
             ]);
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
     
@@ -148,7 +148,7 @@ class GroupController extends Controller {
             $file = ExerciseSolution::where('id', $id)->first();
             return response()->download(base_path() . $file->file_name);
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
     
@@ -159,7 +159,7 @@ class GroupController extends Controller {
             $file->delete();
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -171,7 +171,7 @@ class GroupController extends Controller {
                             ->where('author_id', Auth::id())->get();
             return view('exercises.showExerciseUser', compact('exercise', 'solutions'));
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 
@@ -195,7 +195,7 @@ class GroupController extends Controller {
             ]);
             return redirect()->back();
         }
-        Session::flash('flash_message_error', "You don't have a permission for this operation.");
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
 

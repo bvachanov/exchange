@@ -16,23 +16,24 @@
     <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
     @endif
 
+    <h1>{{trans('translations.courseDetails')}}</h1>
 
     <div class="table-responsive">
         <table class='table'>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Language</th>
-                    <th>Description</th>
-                    <th>Professor</th>
-                    <th>Course of studies</th>
-                    <th>Academic Degree</th>
+                    <th>{{trans('translations.name')}}</th>
+                    <th>{{trans('translations.lang')}}</th>
+                    <th>{{trans('translations.description')}}</th>
+                    <th>{{trans('translations.prof')}}</th>
+                    <th>{{trans('translations.courseOfStudies')}}</th>
+                    <th>{{trans('translations.degree')}}</th>
                     @if(Auth::id()== $course->professor_id)
-                    <th>Edit</th>
+                    <th>{{trans('translations.edit')}}</th>
                     @endif
                     @if(Auth::user()->account_type== 1)
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>{{trans('translations.edit')}}</th>
+                    <th>{{trans('translations.delete')}}</th>
                     @endif
                 </tr>
             </thead>
@@ -42,14 +43,14 @@
                     <td>{{$course->language}}</td>
                     <td>{{$course->description}}</td>
                     <td>{{$professor->academic_title." ".$professor->first_name. " ".$professor->last_name }}</td>
-                    <td>{{$courseOfStudies->name_bg}}</td>
-                    <td>{{$degree->name_bg}}</td>
+                    <td>{{$courseOfStudies->name}}</td>
+                    <td>{{$degree->name}}</td>
                      @if(Auth::id()== $course->professor_id)
-                    <td><a href="{{url('course/edit', [$course->id])}}">Edit course</a></td>
+                    <td><a href="{{url('course/edit', [$course->id])}}">{{trans('translations.editCourse')}}</a></td>
                     @endif
                     @if(Auth::user()->account_type== 1)
-                    <td><a href="{{url('course/edit', [$course->id])}}">Edit course</a></td>
-                    <td><a href="{{url('course/delete', [$course->id])}}">Delete course</a></td>
+                    <td><a href="{{url('course/edit', [$course->id])}}">{{trans('translations.editCourse')}}</a></td>
+                    <td><a href="{{url('course/delete', [$course->id])}}">{{trans('translations.deleteCourse')}}</a></td>
                     @endif
                 </tr>
             </tbody>

@@ -17,7 +17,7 @@ class AddtionalDataStudents extends Migration {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('first_name', 255);
             $table->string('last_name', 255);
-            $table->integer('faculty_number');
+            $table->integer('faculty_number')->unique();
             //zavisqt ot grupata
 //            $table->integer('year');
 //            $table->integer('course_of_studies')->unsigned();
