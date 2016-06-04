@@ -73,3 +73,6 @@ Route::post('studassignment/upload/{id}', 'GroupController@uploadAssignment');
 
 Route::get('studexercise/show/{id}', 'GroupController@showExercise');
 Route::post('studexercise/upload/{id}', 'GroupController@uploadExercise');
+
+Route::get('user/password', 'UserController@showChangePasswordView');
+Route::post('user/password', 'UserController@changePassword');

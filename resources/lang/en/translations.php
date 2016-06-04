@@ -67,6 +67,10 @@ return [
     'lastName'=>'Lastname',
     'acadTitle'=>'Academic Title',
     'acadGroup'=>'Academic Group',
-    
+    'changePassword'=>'Change Password',
+    'change'=>'Change',
+    'oldPass'=>'Old Password',
+    'newPass'=>'New Passowrd',
+    'confirmPass'=>'Confirm Password',
     
 ];

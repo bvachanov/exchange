@@ -67,4 +67,9 @@ return [
     'lastName'=>'Nachname',
     'acadTitle'=>'Academischer Titel',
     'acadGroup'=>'Academische Gruppe',
+    'changePassword'=>'Passwort ändern',
+    'change'=>'Ändern',
+    'oldPass'=>'Altes Passwort',
+    'newPass'=>'Neues Passowrt',
+    'confirmPass'=>'Passwortbestätigung',
     ];

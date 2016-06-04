@@ -17,6 +17,7 @@ use Auth;
 use App\AssignmentToStudent;
 use App\ExerciseToStudent;
 use Session;
+use Hash;
 
 class UserController extends Controller {
 
@@ -88,6 +89,24 @@ class UserController extends Controller {
             }
         }
         return view('users.unresolved', compact('assignments', 'exercises', 'assignTask', 'assignGroup', 'exTask', 'exGroup'));
+    }
+    public function showChangePasswordView()
+    {
+        return view('users.password');
+    }
+    
+    public function changePassword(Requests\ChangePasswordRequest $request)
+    {
+        $oldPassword=$request->input('old_password');
+        $user=Auth::user();
+        if(Hash::check($oldPassword, $user->password))
+        {
+            $user->password=  bcrypt($request->input('password'));
+            $user->save();
+            return redirect('/');
+        }
+        Session::flash('flash_message_error', trans('translations.notAllowed'));
+        return redirect()->back();
     }
 
 }
