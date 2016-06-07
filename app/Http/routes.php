@@ -76,3 +76,9 @@ Route::post('studexercise/upload/{id}', 'GroupController@uploadExercise');
 
 Route::get('user/password', 'UserController@showChangePasswordView');
 Route::post('user/password', 'UserController@changePassword');
+
+Route::get('admin/professor/register', 'AdminController@createProfessor');
+Route::post('admin/professor/register', 'AdminController@storeProfessor');
+
+Route::get('admin/student/register', 'AdminController@createStudent');
+Route::post('admin/student/register', 'AdminController@storeStudent');
