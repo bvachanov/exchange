@@ -24,21 +24,29 @@
     <body style="background-color: #72BCCD;">
         @include('partials.nav')
         <div class="container" style="background-color: white; border: 1px solid #4C7179;">
-            @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong><br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            <div class="col-md-2 col-sm-1"></div>
+            <div class="col-md-8 col-sm-10 cl-xs-12">
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong><br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                @if (Session::has('flash_message_error'))
+                <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
+                @endif
             </div>
-            @endif
-            @if (Session::has('flash_message_error'))
-            <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
-            @endif
-            @yield('content')
+            <div class="col-md-2 col-sm-1"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-10 col-sm-12" style="padding-bottom:40px;">
+                @yield('content')
+            </div>
+            <div class="col-md-1"></div>
         </div>
-            <!-- Scripts -->
+        <!-- Scripts -->
     </body>
 </html>
