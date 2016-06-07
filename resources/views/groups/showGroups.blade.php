@@ -1,10 +1,7 @@
 @extends('app')
 @section('content')
-<div class="container">
     <div class="row">
-        @if (Session::has('flash_message_error'))
-            <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
-        @endif
+
         <center><h1>{{trans('translations.myGroups')}}</h1></center>
         @if(count($groups)>0)
         <table class="table">
@@ -32,8 +29,4 @@
         @endif
         <a href="{{url('group/create')}}"><button>{{trans('translations.addGroup')}}</button></a>
     </div>
-
-
-</div>
-
 @endsection

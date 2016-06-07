@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Xchanger</title>
-
+        <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.png')}}"/>
         <link href="/css/app.css" rel="stylesheet">
 
         <!-- Fonts -->
@@ -21,11 +21,24 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     </head>
-    <body>
-       @include('partials.nav')
-
-        @yield('content')
-
-        <!-- Scripts -->
+    <body style="background-color: #72BCCD;">
+        @include('partials.nav')
+        <div class="container" style="background-color: white; border: 1px solid #4C7179;">
+            @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong><br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            @if (Session::has('flash_message_error'))
+            <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
+            @endif
+            @yield('content')
+        </div>
+            <!-- Scripts -->
     </body>
 </html>

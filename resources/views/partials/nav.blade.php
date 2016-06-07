@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style="background-color:#EAE6DE;">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!--<a class="navbar-brand" href="/">Xchanger</a>-->
-            <a class="navbar-brand" href="/"><img src="{{asset('images/logo.png')}}" style="max-height:30px;"></a>
+            <a class="navbar-brand" href="/"><img src="{{asset('images/logo.png')}}" style="max-height:25px; margin-bottom:3px;"></a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
