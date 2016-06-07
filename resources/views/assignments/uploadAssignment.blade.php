@@ -5,7 +5,8 @@
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
  
     <div class="row">
-        {!! Form::file('file') !!}      
+        {!! Form::label('file', trans('translations.uploadFile')) !!}
+        {!! Form::file('file', ['class'=>'form-control']) !!}      
     </div>
    
     <div class="row">

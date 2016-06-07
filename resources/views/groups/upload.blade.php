@@ -4,15 +4,16 @@
     {!! Form::open(array('url' => array('group/upload', $group->id ), 'files' => true )) !!}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <div class="row">
-        <p>{{trans('translations.name')}}</p>
-        {!! Form::text('name') !!}       
+        {!! Form::label('name', trans('translations.name')) !!}
+        {!! Form::text('name', '' , ['class'=>'form-control']) !!}       
     </div>
     <div class="row">
-        {!! Form::file('file') !!}      
+          {!! Form::label('file', trans('translations.uploadFile')) !!}
+        {!! Form::file('file', ['class'=>'form-control']) !!}      
     </div>
     <div class="row">
-        <p>{{trans('translations.materialType')}}:<p>
-        {!! Form::select('type',  $materialTypes, null,['id'=>'type', 'placeholder'=>'Select type']) !!}      
+        {!! Form::label('type', trans('translations.materialType')) !!}
+        {!! Form::select('type',  $materialTypes, null,['id'=>'type', 'placeholder'=>'Select type' , 'class'=>'form-control']) !!}      
     </div>
     
     <div class="row" id='datepickerRow' style="display:none;">

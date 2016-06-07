@@ -36,34 +36,34 @@
             <p>{{trans('translations.prof')}}:  {{$professors[$course->professor_id]}}</p> 
             {!! Form::hidden('professor', $course->professor_id) !!}  
     </div>
-    <div class="row">
-        <p>{{trans('translations.description')}}:</p>
-        {!! Form::textarea('description', $course->description) !!}      
+    <div class="row">       
+        {!! Form::label('description', trans('translations.description')) !!}
+        {!! Form::textarea('description', $course->description, ['class'=>'form-control']) !!}      
     </div>
     @endif
     @if(Auth::user()->account_type==1)
     <div class="row">
-        <p>{{trans('translations.name')}}:</p>
-        {!! Form::text('name', $course->name) !!}       
+        {!! Form::label('name', trans('translations.name')) !!}
+        {!! Form::text('name', $course->name , ['class'=>'form-control']) !!}       
     </div>
      <div class="row">
-        <p>{{trans('translations.lang')}}:</p>
-        {!! Form::text('language', $course->language) !!}       
+        {!! Form::label('language', trans('translations.lang')) !!}
+        {!! Form::text('language', $course->language , ['class'=>'form-control']) !!}       
     </div>
     <div class="row">
-        <p>{{trans('translations.description')}}:</p>
-        {!! Form::textarea('description', $course->description) !!}      
+        {!! Form::label('description', trans('translations.description')) !!}
+        {!! Form::textarea('description', $course->description, ['class'=>'form-control']) !!}      
     </div>
     
     
     <div class="row">
-            <p>{{trans('translations.courseOfStudies')}}:</p>
-           {!! Form::select('course_of_studies', $courses, $course->course_of_studies, ['id'=>'course']) !!}          
+           {!! Form::label('course_of_studies', trans('translations.courseOfStudies')) !!}
+           {!! Form::select('course_of_studies', $courses, $course->course_of_studies, ['id'=>'course', 'class'=>'form-control']) !!}          
     </div>
     
     <div class="row">
-            <p>{{trans('translations.prof')}}:</p>
-           {!! Form::select('professor', $professors, $course->professor_id ,['id'=>'professor']) !!}          
+             {!! Form::label('professor', trans('translations.prof')) !!}
+           {!! Form::select('professor', $professors, $course->professor_id ,['id'=>'professor', 'class'=>'form-control']) !!}            
     </div>
     @endif
     <div class="row">

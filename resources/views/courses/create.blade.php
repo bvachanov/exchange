@@ -19,27 +19,27 @@
     {!! Form::open(array('url' => 'course/create')) !!}
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
     <div class="row">
-        <p>{{trans('translations.name')}}:</p>
-        {!! Form::text('name') !!}       
+        {!! Form::label('name', trans('translations.name')) !!}
+        {!! Form::text('name' , '', ['class'=>'form-control']) !!}       
     </div>
      <div class="row">
-        <p>{{trans('translations.lang')}}:</p>
-        {!! Form::text('language') !!}       
+        {!! Form::label('language', trans('translations.lang')) !!}
+        {!! Form::text('language', '', ['class'=>'form-control']) !!}       
     </div>
     <div class="row">
-        <p>{{trans('translations.description')}}:</p>
-        {!! Form::textarea('description') !!}      
+         {!! Form::label('description', trans('translations.description')) !!}
+        {!! Form::textarea('description','', ['class'=>'form-control']) !!}      
     </div>
     
     
     <div class="row">
-            <p>{{trans('translations.courseOfStudies')}}:</p>
-           {!! Form::select('course_of_studies', $courses, ['id'=>'course']) !!}          
+            {!! Form::label('course_of_studies', trans('translations.courseOfStudies')) !!}
+           {!! Form::select('course_of_studies', $courses, null, ['id'=>'course' , 'class'=>'form-control']) !!}          
     </div>
     
     <div class="row">
-            <p>{{trans('translations.prof')}}:</p>
-           {!! Form::select('professor', $professors, ['id'=>'professor']) !!}          
+            {!! Form::label('professor', trans('translations.prof')) !!}
+           {!! Form::select('professor', $professors, null, ['id'=>'professor', 'class'=>'form-control']) !!}          
     </div>
     
     <div class="row">
