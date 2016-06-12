@@ -31,7 +31,7 @@
     </div>
     @if(Auth::user()->account_type==1)
     <div class="row">
-        <center> <a href="{{url('course/create')}}"><button>{{trans('translations.addCourse')}}</button></a> </center>
+        <center> <a href="{{url('course/create')}}"><button class="styledButtons">{{trans('translations.addCourse')}}</button></a> </center>
     </div>
     @endif
 

@@ -40,8 +40,8 @@
         </div>
         @endforeach
     </div>
-    <div class="row">
-        {!! Form::submit(trans('translations.store')) !!}
+    <div class="row">  
+        <button class="submitButton"> {{trans('translations.store')}}</button>
 
     </div>
 

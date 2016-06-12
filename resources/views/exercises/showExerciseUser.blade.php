@@ -17,7 +17,7 @@
                 <td>{{$exercise->name}}</td>
                 <td>{{$exercise->created_at}}</td>
                 <td>{{$exercise->end_date}}</td>
-                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>{{trans('translations.download')}}</button></a></td>              
+                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>              
             </tr>
             
         </tbody>
@@ -39,8 +39,8 @@
             <tr>
                 <td>{{$solution->created_at}}</td>
                 <td>{{$solution->feedback}}</td>
-                <td><a href="{{url('group/file/download/exercise/solution', [$solution->id])}}"><button>{{trans('translations.download')}}</button></a></td>  
-                <td><a href="{{url('group/file/delete/exercise/solution', [$solution->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
+                <td><a href="{{url('group/file/download/exercise/solution', [$solution->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>  
+                <td><a href="{{url('group/file/delete/exercise/solution', [$solution->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr> 
             @endforeach
         </tbody>

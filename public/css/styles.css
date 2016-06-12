@@ -1,0 +1,27 @@
+.styledButtons{
+    padding: 8px 20px;
+    border-radius: 3px;
+    border: 1px solid;
+    background-color: #147C98;
+    color:white;
+    font-size: 14px;
+    font-weight:400;
+}
+.styledButtons:hover, .styledButtons:active{
+    background-color:#422A77;
+}
+.form-control{
+    min-height:50px;
+}
+.submitButton{
+    padding: 8px 20px;
+    border-radius: 3px;
+    border: 1px solid;
+    background-color: #6976A8;
+    color:white;
+    font-size: 14px;
+    font-weight:400;
+}
+.submitButton:hover, .submitButton:active{
+    background-color:#080B12;
+}

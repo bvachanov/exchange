@@ -34,7 +34,8 @@
     </div>
 
     <div class="row">
-        {!! Form::submit(trans('translations.upload')) !!}
+        <!--{!! Form::submit(trans('translations.upload')) !!}-->
+         <button class="submitButton"> {{trans('translations.upload')}}</button>
 
     </div>
 

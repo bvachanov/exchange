@@ -32,7 +32,7 @@
            
             
            
-            {!! Form::submit(trans('translations.submit')) !!}
+            <button class="submitButton"> {{trans('translations.submit')}}</button>
         </div>
         <div class="col-md-2 col-sm-1"></div>
     </div>

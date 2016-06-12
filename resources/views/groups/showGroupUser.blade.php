@@ -3,7 +3,7 @@
 
 
 
-   <center><h1>{{trans('translations.showGroup')}}</h1></center>
+   <center><h1>{{trans('translations.showGroup'.' '.$group->name)}}</h1></center>
     <center>{{trans('translations.name')}}: {{$group->name}}</center>
 
     <center>{{trans('translations.description')}}: {{$group->description}}</center>
@@ -29,7 +29,7 @@
             <tr>
                 <td>{{$lecture->name}}</td>
                 <td>{{$lecture->created_at}}</td>
-                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button>{{trans('translations.download')}}</button></a></td>             
+                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>             
             </tr>
             @endforeach
         </tbody>
@@ -55,7 +55,7 @@
                 <td><a href="{{url('studexercise/show', [$exercise->id])}}">{{$exercise->name}}</a></td>
                 <td>{{$exercise->created_at}}</td>
                 <td>{{$exercise->end_date}}</td>
-                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>{{trans('translations.download')}}</button></a></td>              
+                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>              
             </tr>
             @endforeach
         </tbody>
@@ -81,7 +81,7 @@
                 <td><a href="{{url('studassignment/show', [$assignment->id])}}">{{$assignment->name}}</a></td>
                 <td>{{$assignment->created_at}}</td>
                 <td>{{$assignment->end_date}}</td>
-                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>{{trans('translations.download')}}</button></a></td>              
+                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>              
             </tr>
             @endforeach
         </tbody>
@@ -105,7 +105,7 @@
             <tr>
                 <td>{{$other->name}}</td>
                 <td>{{$other->created_at}}</td>
-                <td><a href="{{url('group/file/download/other', [$other->id])}}"><button>{{trans('translations.download')}}</button></a></td>
+                <td><a href="{{url('group/file/download/other', [$other->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>
               
             </tr>
             @endforeach

@@ -23,8 +23,8 @@
                 <td>@foreach( $assignedTo as $a)
                    <a href='{{url('/user/show', $a->user_id)}}'>{{$a->faculty_number}}</a>
                 @endforeach</td>
-                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>{{trans('translations.download')}}</button></a></td>
-                <td><a href="{{url('group/file/delete/exercise', [$exercise->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
+                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>
+                <td><a href="{{url('group/file/delete/exercise', [$exercise->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr>
         </tbody>
     </table>
@@ -51,7 +51,8 @@
                 <td><a href="{{url('group/file/download/exercise/solution', [$upload->id])}}">{{trans('translations.download')}}</a></td>
                 <td>
                     {!! Form::textarea('feedback', $upload->feedback) !!}
-                     {!!Form::submit(trans('translations.storeFeedback'))!!}
+                     <!--{!!Form::submit(trans('translations.storeFeedback'))!!}-->
+                     <button class="submitButton">{{trans('translations.storeFeedback')}}</button>
                 <td>
             </tr>
             {!!Form::close()!!}

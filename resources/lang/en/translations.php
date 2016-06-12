@@ -5,7 +5,7 @@ return [
     'lang'=>'Language',
     'prof'=>'Professor',
     'description'=>'Description',
-    'courseOfStudies'=>'Course Of Studies',
+    'courseOfStudies'=>'Course Of Study',
     'degree'=>'Academic Degree',
     'allCourses'=>'All Courses',
     'addCourse'=>'New Course',

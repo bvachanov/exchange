@@ -17,9 +17,9 @@
             @foreach ($groups as $group)
             <tr>
                 <td>{{$group->name}}</td>
-                <td> <a href="{{url('group/show', [$group->id])}}"><button>{{trans('translations.show')}}</button></a></td>
-                <td> <a href="{{url('group/edit', [$group->id])}}"><button>{{trans('translations.edit')}}</button></a></td>
-                 <td> <a href="{{url('group/delete', [$group->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
+                <td> <a href="{{url('group/show', [$group->id])}}"><button class="styledButtons">{{trans('translations.show')}}</button></a></td>
+                <td> <a href="{{url('group/edit', [$group->id])}}"><button class="styledButtons">{{trans('translations.edit')}}</button></a></td>
+                 <td> <a href="{{url('group/delete', [$group->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr>
             @endforeach 
             </tbody>
@@ -27,6 +27,6 @@
         @else
         <p>{{trans('translations.noGroups')}}</p>
         @endif
-        <a href="{{url('group/create')}}"><button>{{trans('translations.addGroup')}}</button></a>
+        <a href="{{url('group/create')}}"><button class="styledButtons">{{trans('translations.addGroup')}}</button></a>
     </div>
 @endsection

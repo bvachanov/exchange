@@ -1,15 +1,15 @@
 @extends('app')
 @section('content')
 
-    <center><h1>{{trans('translations.showGroup')}}</h1></center>
+    <center><h1>{{trans('translations.showGroup').' '.$group->name}}</h1></center>
     <center>{{trans('translations.name')}}: {{$group->name}}</center>
 
     <center>{{trans('translations.description')}}: {{$group->description}}</center>
 
     <center>{{trans('translations.course')}}: {{$discipline->name}}</center>
 
-    <center><a href="{{url('group/edit', [$group->id])}}"><button>{{trans('translations.edit')}}</button></a></center>
-    <center><a href="{{url('group/delete', [$group->id])}}"><button>{{trans('translations.delete')}}</button></a></center>
+    <center><a href="{{url('group/edit', [$group->id])}}"><button class="styledButtons">{{trans('translations.edit')}}</button></a></center>
+    <center><a href="{{url('group/delete', [$group->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></center>
     <h2>{{trans('translations.students')}}:</h2>
     <div class="row">
         @foreach ($students as $student)
@@ -33,8 +33,8 @@
             <tr>
                 <td>{{$lecture->name}}</td>
                 <td>{{$lecture->created_at}}</td>
-                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button>{{trans('translations.download')}}</button></a></td>
-                <td><a href="{{url('group/file/delete/lecture', [$lecture->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
+                <td><a href="{{url('group/file/download/lecture', [$lecture->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>
+                <td><a href="{{url('group/file/delete/lecture', [$lecture->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr>
             @endforeach
         </tbody>
@@ -65,8 +65,8 @@
                 <td>@foreach( $studentsToExercise[$exercise->id] as $ex)
                     <a href='{{url('/user/show', $ex->user_id)}}'>{{$ex->faculty_number}}</a>
                 @endforeach</td>
-                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button>{{trans('translations.download')}}</button></a></td>
-                <td><a href="{{url('group/file/delete/exercise', [$exercise->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
+                <td><a href="{{url('group/file/download/exercise', [$exercise->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>
+                <td><a href="{{url('group/file/delete/exercise', [$exercise->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr>
             @endforeach
         </tbody>
@@ -97,8 +97,8 @@
                 <td>@foreach( $studentsToAssignment[$assignment->id] as $ass)
                     <a href='{{url('/user/show', $ass->user_id)}}'>{{$ass->faculty_number}}</a>
                 @endforeach</td>
-                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button>{{trans('translations.download')}}</button></a></td>
-                <td><a href="{{url('group/file/delete/assignment', [$assignment->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
+                <td><a href="{{url('group/file/download/assignment', [$assignment->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>
+                <td><a href="{{url('group/file/delete/assignment', [$assignment->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr>
             @endforeach
         </tbody>
@@ -123,8 +123,8 @@
             <tr>
                 <td>{{$other->name}}</td>
                 <td>{{$other->created_at}}</td>
-                <td><a href="{{url('group/file/download/other', [$other->id])}}"><button>{{trans('translations.download')}}</button></a></td>
-                <td><a href="{{url('group/file/delete/other', [$other->id])}}"><button>{{trans('translations.delete')}}</button></a></td>
+                <td><a href="{{url('group/file/download/other', [$other->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>
+                <td><a href="{{url('group/file/delete/other', [$other->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr>
             @endforeach
         </tbody>

@@ -42,7 +42,8 @@
         @endforeach
     </div>
     <div class="row">
-        {!! Form::submit(trans('translations.store')) !!}
+       
+         <button class="submitButton"> {{trans('translations.store')}}</button>
 
     </div>
 
