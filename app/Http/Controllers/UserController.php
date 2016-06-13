@@ -90,6 +90,7 @@ class UserController extends Controller {
         }
         return view('users.unresolved', compact('assignments', 'exercises', 'assignTask', 'assignGroup', 'exTask', 'exGroup'));
     }
+    
     public function showChangePasswordView()
     {
         return view('users.password');
