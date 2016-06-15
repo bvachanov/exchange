@@ -21,7 +21,11 @@
                     <td><a href="{{url('course/show', [$course->id])}}">{{$course->name}}</a></td>
                     <td>{{$course->language}}</td>
                     <td>{{$course->description}}</td>
+                    @if($course->user_id!=null)
                     <td><a href='{{url('/user/show', $course->user_id)}}'>{{$course->academic_title." ".$course->first_name. " ".$course->last_name }}</a></td>
+                    @else
+                    <td>{{trans('translations.noProfessor')}}</td>
+                    @endif
                     <td>{{$course->course_name}}</td>
                     <td>{{$course->acad}}</td>
                 </tr>

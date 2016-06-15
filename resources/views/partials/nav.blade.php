@@ -14,8 +14,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 @if (!Auth::guest())
+                @if(Auth::user()->account_type==1)
+                <li><a href="{{url('admin/professor/all')}}">{{trans('translations.allProfessors')}}</a></li>
+                <li><a href='{{url('admin/student/all')}}'>{{trans('translations.allStudents')}}</a></li>               
+                @endif
                 @if(Auth::user()->account_type==2)
-                <li><a href="/group/all">{{trans('translations.myGroups')}}</a></li>
+                <li><a href="{{url('group/all')}}">{{trans('translations.myGroups')}}</a></li>
                 <li><a href='{{url('professor/allTasks')}}'>{{trans('translations.allTasks')}}</a></li>               
                 @endif
                 <li><a href="/course/all">{{trans('translations.allCourses')}}</a></li>

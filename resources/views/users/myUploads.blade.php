@@ -6,7 +6,7 @@
     <div class="row">
         <h2>{{trans('translations.exercises')}}</h2>
         @if(count($exercises)>0)
-        <table class="table">
+        <table class="table" id="myUploadsTable">
             <thead>
                 <tr>
                     <th>{{trans('translations.exerciseDetails')}}</th>
@@ -32,7 +32,7 @@
      <div class="row">
         <h2>{{trans('translations.assignments')}}:</h2>
         @if(count($assignments)>0)
-        <table class="table">
+        <table class="table" id="uploads2">
             <thead>
                 <tr>
                     <th>{{trans('translations.assignmentDetails')}}</th>
@@ -54,5 +54,11 @@
         <p>{{trans('translations.noUploads')}}</p>
         @endif
     </div>
+    <script>
+    $(document).ready(function(){
+    $('#myUploadsTable').DataTable();
+    $('#uploads2').DataTable();
+});
+    </script>
 
 @endsection

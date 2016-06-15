@@ -8,6 +8,7 @@
         <!--<link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.png')}}"/>-->
         <link href="/css/app.css" rel="stylesheet">
         <link href="/css/styles.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.css"/>
 
         <!-- Fonts -->
         <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -21,6 +22,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
     </head>
     <body style="background-color: #72BCCD;">
         @include('partials.nav')
@@ -39,6 +41,9 @@
                 @endif
                 @if (Session::has('flash_message_error'))
                 <div class="alert alert-danger">{{ Session::get('flash_message_error') }}</div>
+                @endif
+                @if (Session::has('flash_message'))
+                <div class="alert alert-success">{{ Session::get('flash_message') }}</div>
                 @endif
             </div>
             <div class="col-md-2 col-sm-1"></div>

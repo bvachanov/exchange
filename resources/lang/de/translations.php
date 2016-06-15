@@ -72,4 +72,12 @@ return [
     'oldPass'=>'Altes Passwort',
     'newPass'=>'Neues Passowrt',
     'confirmPass'=>'Passwortbestätigung',
+    'allProfessors'=>'Alle Dozenten',
+    'noProfessor'=>'Kein Dozent',
+    'noProfessors'=>'Keine Dozenten',
+    'noStudents'=>'Keine Studenten',
+    'registerProfessor'=>'Dozent Anmelden',
+    'registerStudent'=>'Student Anmelden',
+    'success'=>'Opration erfolgreich.',
+    'noUploads'=>'Keine Dateien hochgeladen.'
     ];

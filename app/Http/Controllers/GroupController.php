@@ -32,14 +32,13 @@ class GroupController extends Controller {
 
     public function getGroups() {
         $id = Auth::id();
-        $groups = Group::join('group_to_student', 'groups.id','=','group_to_student.group_id')
-                ->where('student_id', $id)->get();
-        $courses=[];
-        $professors=[];
-        foreach ($groups as $group)
-        {
-            $courses[$group->id]=DB::table('courses')->where('id', $group->course_id)->first();
-            $professors[$group->id]=DB::table('additional_data_professors')->where('user_id', $group->professor_id)->first();
+        $groups = Group::join('group_to_student', 'groups.id', '=', 'group_to_student.group_id')
+                        ->where('student_id', $id)->get();
+        $courses = [];
+        $professors = [];
+        foreach ($groups as $group) {
+            $courses[$group->id] = DB::table('courses')->where('id', $group->course_id)->first();
+            $professors[$group->id] = DB::table('additional_data_professors')->where('user_id', $group->professor_id)->first();
         }
         return view('groups.showGroupsStudent', compact('groups', 'professors', 'courses'));
     }
@@ -67,26 +66,76 @@ class GroupController extends Controller {
 
     public function downloadLecture($id) {
         $file = Lecture::where('id', $id)->first();
-        return response()->download(base_path() . $file->file_name);
+        $result = $this->checkIfAuthorized($file->author_id, $id, $file->group_id, 1);
+        if ($result == true) {
+            return response()->download(base_path() . $file->file_name);
+        } else {
+            Session::flash('flash_message_error', trans('translations.notAllowed'));
+            return redirect()->back();
+        }
     }
 
     public function downloadExercise($id) {
         $file = Exercise::where('id', $id)->first();
-        return response()->download(base_path() . $file->file_name);
+        $result = $this->checkIfAuthorized($file->author_id, $id, $file->group_id, 2);
+        if ($result == true) {
+            return response()->download(base_path() . $file->file_name);
+        } else {
+            Session::flash('flash_message_error', trans('translations.notAllowed'));
+            return redirect()->back();
+        }
     }
 
     public function downloadAssignment($id) {
         $file = Assignment::where('id', $id)->first();
-        return response()->download(base_path() . $file->file_name);
+        $result = $this->checkIfAuthorized($file->author_id, $id, $file->group_id, 3);
+        if ($result == true) {
+            return response()->download(base_path() . $file->file_name);
+        } else {
+            Session::flash('flash_message_error', trans('translations.notAllowed'));
+            return redirect()->back();
+        }
     }
 
     public function downloadOther($id) {
         $file = ProfessorMaterial::where('id', $id)->first();
-        return response()->download(base_path() . $file->file_name);
+        $result = $this->checkIfAuthorized($file->author_id, $id, $file->group_id, 4);
+        if ($result == true) {
+            return response()->download(base_path() . $file->file_name);
+        } else {
+            Session::flash('flash_message_error', trans('translations.notAllowed'));
+            return redirect()->back();
+        }
+    }
+
+    private function checkIfAuthorized($authorId, $taskId, $groupId, $taskType) {
+        $id = Auth::id();
+        $joinedToGroup = GroupToStudent::where('student_id', $id)->where('group_id', $groupId)->count();
+
+        if ($authorId == $id) {
+            return true;
+        } else if ($joinedToGroup == 1) {
+            if ($taskType == 2) {
+                $joinedToA = ExerciseToStudent::where('exercise_id', $taskId)->where('student_id', $id)->count();
+                if ($joinedToA == 1) {
+                    return true;
+                }
+            }
+            else if ($taskType == 3) {
+                $joinedToA = AssignmentToStudent::where('assignment_id', $taskId)->where('student_id', $id)->count();
+                if ($joinedToA == 1) {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     public function downloadAssignmentSolution($id) {
-        $isAuthor = AssignmentSolution::where('author_id', Auth::id())->count();        
+        $isAuthor = AssignmentSolution::where('author_id', Auth::id())->count();
         if ($isAuthor > 0 || Auth::user()->account_type == 2) {
             $file = AssignmentSolution::where('id', $id)->first();
             return response()->download(base_path() . $file->file_name);
@@ -94,7 +143,7 @@ class GroupController extends Controller {
         Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
-    
+
     public function deleteAssignmentSolution($id) {
         $file = AssignmentSolution::where('id', $id)->first();
         if ($file->author_id == Auth::id()) {
@@ -141,7 +190,7 @@ class GroupController extends Controller {
         Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
-    
+
     public function downloadExerciseSolution($id) {
         $isAuthor = ExerciseSolution::where('author_id', Auth::id())->count();
         if ($isAuthor > 0 || Auth::user()->account_type == 2) {
@@ -151,7 +200,7 @@ class GroupController extends Controller {
         Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
     }
-    
+
     public function deleteExerciseSolution($id) {
         $file = ExerciseSolution::where('id', $id)->first();
         if ($file->author_id == Auth::id()) {

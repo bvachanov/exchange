@@ -29,7 +29,11 @@
                     <td>{{$course->name}}</td>
                     <td>{{$course->language}}</td>
                     <td>{{$course->description}}</td>
+                    @if(!empty($professor))
                     <td><a href='{{url('/user/show', $professor->user_id)}}'>{{$professor->academic_title.' '.$professor->first_name.' '.$professor->last_name}}</a></td>
+                    @else
+                    <td>{{trans('translations.noProfessor')}}</td>
+                    @endif
                     <td>{{$courseOfStudies->name}}</td>
                     <td>{{$degree->name}}</td>
                      @if(Auth::id()== $course->professor_id)

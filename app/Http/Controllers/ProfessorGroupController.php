@@ -35,7 +35,7 @@ class ProfessorGroupController extends Controller {
         $nameLoc = 'name_' . $locale;
         $coursesOfStudies = DB::table('course_of_studies')->lists($nameLoc, 'id');
         $years = DB::table('additional_data_students')->distinct()->lists('year', 'year');
-        $disciplines = Course::all()->lists('name', 'id');
+        $disciplines = Course::where('professor_id', Auth::id())->lists('name', 'id');
         return view('groups.addGroup', compact('users', 'disciplines', 'coursesOfStudies', 'years'));
     }
 

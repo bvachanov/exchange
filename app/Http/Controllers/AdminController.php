@@ -10,6 +10,11 @@ use Request;
 use App\User;
 use App\AdditionalDataProfessors;
 use App\AdditionalDataStudents;
+use App\ExerciseSolution;
+use App\AssignmentSolution;
+use App\Group;
+use Storage;
+use App\Course;
 
 class AdminController extends Controller {
 
@@ -69,24 +74,59 @@ class AdminController extends Controller {
 
     public function deleteUser($id) {
         $user = User::where('id', $id)->first();
-        if ($user->account_type != 1) {
+        if ($user->account_type == 3) {
+            $this->deleteFilesStudent($id);
             $user->delete();
             Session::flash('flash_message', trans('translations.success'));
+        } else if ($user->account_type == 2) {
+            $this->deleteFilesProfessor($id);
+            $this->removeProfessorFromCourse($id);
+            $user->delete();
+        } else {
+            Session::flash('flash_message_error', trans('translations.notAllowed'));
         }
-        Session::flash('flash_message_error', trans('translations.notAllowed'));
-       // return redirect();
+        return redirect()->back();
+    }
+
+    private function deleteFilesStudent($id) {
+        $filesA = AssignmentSolution::where('author_id', $id)->get();
+        foreach ($filesA as $file) {
+            unlink(base_path() . $file->file_name);
+            $file->delete();
+        }
+        $filesE = ExerciseSolution::where('author_id', $id)->get();
+        foreach ($filesE as $file) {
+            unlink(base_path() . $file->file_name);
+            $file->delete();
+        }
+    }
+
+    private function removeProfessorFromCourse($id) {
+        $courses = Course::where('professor_id', $id)->get();
+        foreach ($courses as $c) {
+            $c->professor_id = null;
+            $c->save();
+        }
+    }
+
+    private function deleteFilesProfessor($id) {
+        $groups = Group::where('professor_id', $id)->get();
+        foreach ($groups as $group) {
+            $path = '/fileStorage/group_' . $group->id . '_dir';
+            Storage::disk('local')->deleteDirectory($path);
+        }
     }
 
     public function getAllStudents() {
-        $studens = User::where('account_type', 3)->join('additional_data_students', 'additional_data_students.user_id', '=', 'users.id')
+        $students = User::where('account_type', 3)->join('additional_data_students', 'additional_data_students.user_id', '=', 'users.id')
                         ->select('users.id', 'users.name', 'users.email', 'additional_data_students.first_name', 'additional_data_students.last_name', 'additional_data_students.faculty_number')->get();
-        dd($studens);
+        return view('admin.allStudents', compact('students'));
     }
 
     public function getAllProfessors() {
-      $professors = User::where('account_type', 2)->join('additional_data_professors', 'additional_data_professors.user_id', '=', 'users.id')
+        $professors = User::where('account_type', 2)->join('additional_data_professors', 'additional_data_professors.user_id', '=', 'users.id')
                         ->select('users.id', 'users.name', 'users.email', 'additional_data_professors.first_name', 'additional_data_professors.last_name', 'additional_data_professors.academic_title')->get();
-        dd($professors);  
+        return view('admin.allProfessors', compact('professors'));
     }
 
 }
