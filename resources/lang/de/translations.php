@@ -79,5 +79,6 @@ return [
     'registerProfessor'=>'Dozent Anmelden',
     'registerStudent'=>'Student Anmelden',
     'success'=>'Opration erfolgreich.',
-    'noUploads'=>'Keine Dateien hochgeladen.'
+    'noUploads'=>'Keine Dateien hochgeladen.',
+    'submit'=>'Einreichen',
     ];

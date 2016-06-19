@@ -3,7 +3,7 @@
 
 
 
-   <center><h1>{{trans('translations.showGroup'.' '.$group->name)}}</h1></center>
+   <center><h1>{{trans('translations.showGroup').' '.$group->name}}</h1></center>
     <center>{{trans('translations.name')}}: {{$group->name}}</center>
 
     <center>{{trans('translations.description')}}: {{$group->description}}</center>

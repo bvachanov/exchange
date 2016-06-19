@@ -58,7 +58,7 @@ return [
     'allAssignments' => 'All Assignemnts',
     'allExercises' => 'All Exercises',
     'countOfNotReviewed' => 'Count of not reviewed',
-    'group' => 'Gruppe',
+    'group' => 'Group',
     'allAssignmentsResolved' => 'All assignments are resolved.',
     'allExercisesResolved' => 'All exercises are resolved.',
     'userDetails' => 'User Details',
@@ -80,5 +80,7 @@ return [
     'registerProfessor' => 'Register Professor',
     'registerStudent' => 'Register Student',
     'success' => 'Success.',
-    'noUploads'=>'No files uploaded .'
+    'noUploads'=>'No files uploaded .',
+    'submit'=>'Submit',
+    
 ];

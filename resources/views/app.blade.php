@@ -26,7 +26,7 @@
     </head>
     <body style="background-color: #72BCCD;">
         @include('partials.nav')
-        <div class="container" style="background-color: white; border: 1px solid #4C7179;">
+        <div class="container" style="background-color: white; border: 1px solid #4C7179; margin-bottom:10px;">
             <div class="col-md-2 col-sm-1"></div>
             <div class="col-md-8 col-sm-10 cl-xs-12">
                 @if (count($errors) > 0)

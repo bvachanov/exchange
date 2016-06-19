@@ -42,6 +42,7 @@ class AdminController extends Controller {
             'last_name' => $request->input('last_name'),
             'academic_title' => $request->input('academic_title'),
         ]);
+         Session::flash('flash_message', trans('translations.success'));
         return redirect()->back();
     }
 
@@ -69,6 +70,7 @@ class AdminController extends Controller {
             'faculty_number' => $request->input('faculty_number'),
             'group_number' => $request->input('academic_group'),
         ]);
+         Session::flash('flash_message', trans('translations.success'));
         return redirect()->back();
     }
 

@@ -22,7 +22,7 @@ class UploadAssignmentRequest extends Request {
      */
     public function rules() {
         return [            
-            'file' => 'required|max:20000',            
+            'file' => 'required|max:10000',            
         ];
     }
 
