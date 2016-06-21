@@ -39,8 +39,8 @@
             <tr>
                 <td>{{$solution->created_at}}</td>
                 <td>{{$solution->feedback}}</td>
-                <td><a href="{{url('group/file/download/exercise/solution', [$solution->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>  
-                <td><a href="{{url('group/file/delete/exercise/solution', [$solution->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
+                <td><a href="{{url('group/file/download/assignment/solution', [$solution->id])}}"><button class="styledButtons">{{trans('translations.download')}}</button></a></td>  
+                <td><a href="{{url('group/file/delete/assignment/solution', [$solution->id])}}"><button class="styledButtons">{{trans('translations.delete')}}</button></a></td>
             </tr> 
             @endforeach
         </tbody>
