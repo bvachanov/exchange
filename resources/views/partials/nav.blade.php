@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!--<a class="navbar-brand" href="/">Xchanger</a>-->
-            <a class="navbar-brand" href="/"><img src="{{asset('images/logo.png')}}" style="max-height:25px; margin-bottom:3px;"></a>
+            <a class="navbar-brand" href="/"><img src="{{asset('images/logo.png')}}" style="max-height:35px; margin-top:-3px;"></a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
