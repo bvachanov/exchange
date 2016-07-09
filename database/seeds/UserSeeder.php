@@ -20,15 +20,15 @@ class UserSeeder extends Seeder {
              ['name' => 'student2', 'email' => 'student2@fdiba.bg', 'password' => bcrypt('123456'), 'account_type' => 3],
         ]);
          DB::table('additional_data_students')->insert([
-             ['user_id'=>3, 'first_name'=>'Student1', 'last_name'=>"studentov1",
+             ['user_id'=>3, 'first_name'=>'Blagovest', 'last_name'=>"Achanov",
                  'faculty_number'=>201212013, 'group_number'=>88, 'year'=>2012,
                  'course_of_studies'=>1],
-             ['user_id'=>4, 'first_name'=>'Student2', 'last_name'=>"studentov2",
-                 'faculty_number'=>201212014, 'group_number'=>88, 'year'=>2012,
+             ['user_id'=>4, 'first_name'=>'Hans', 'last_name'=>"Jochan",
+                 'faculty_number'=>201212099, 'group_number'=>88, 'year'=>2012,
                  'course_of_studies'=>1],
          ]);
          DB::table('additional_data_professors')->insert([
-             ['user_id'=>2, 'first_name'=>'Daakal', 'last_name'=>"daskalov",
+             ['user_id'=>2, 'first_name'=>'Ivan', 'last_name'=>"Petrov",
                  'academic_title'=>'Dozent'],
          ]);
     }
