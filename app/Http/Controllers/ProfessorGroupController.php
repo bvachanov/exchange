@@ -147,7 +147,7 @@ class ProfessorGroupController extends Controller {
 
     public function storeExerciseFeedback($id, Requests\StoreFeedbackRequest $request) {
         $solution = \App\ExerciseSolution::where('id', $id)->first();
-        $task = Assignment::where('id', $solution->exercise_id)->first();
+        $task = Exercise::where('id', $solution->exercise_id)->first();
         if ($task->author_id == Auth::id()) {
             $solution->feedback = $request->input('feedback');
             $solution->save();
@@ -276,7 +276,7 @@ class ProfessorGroupController extends Controller {
             return redirect()->back();
         }
         Session::flash('flash_message_error', trans('translations.notAllowed'));
-        return redirect()->back();
+         return redirect()->action('ProfessorGroupController@showGroup', [$file->group_id]);
     }
 
     public function deleteOther($id) {
@@ -287,7 +287,7 @@ class ProfessorGroupController extends Controller {
             return redirect()->back();
         }
         Session::flash('flash_message_error', trans('translations.notAllowed'));
-        return redirect()->back();
+        return redirect()->action('ProfessorGroupController@showGroup', [$file->group_id]);
     }
 
     public function deleteExercise($id) {
@@ -295,7 +295,7 @@ class ProfessorGroupController extends Controller {
         if ($file->author_id == Auth::id()) {
             unlink(base_path() . $file->file_name);
             $file->delete();
-            return redirect()->back();
+            return redirect()->action('ProfessorGroupController@showGroup', [$file->group_id]);
         }
         Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
@@ -306,7 +306,7 @@ class ProfessorGroupController extends Controller {
         if ($file->author_id == Auth::id()) {
             unlink(base_path() . $file->file_name);
             $file->delete();
-            return redirect()->back();
+            return redirect()->action('ProfessorGroupController@showGroup', [$file->group_id]);
         }
         Session::flash('flash_message_error', trans('translations.notAllowed'));
         return redirect()->back();
