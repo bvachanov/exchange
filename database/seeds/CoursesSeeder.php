@@ -13,7 +13,7 @@ class CoursesSeeder extends Seeder {
         DB::table('courses')->delete();
         DB::table('courses')->insert([
             ['professor_id' => 2, 'name' => 'Mathematik 1', 'language' => 'Deutsch',
-                'description'=>'Obligatorischer Fach, keine Vorkenntinisse notwendig.','course_of_studies'=>1], 
+                'description'=>'Obligatorischer Fach, keine Vorkenntnisse notwendig.','course_of_studies'=>1], 
             ['professor_id' => 2, 'name' => 'Mathematik 2', 'language' => 'Deutsch',
                 'description'=>'Vorkenntnisse: Mathematik 1','course_of_studies'=>1],   
            
