@@ -42,7 +42,7 @@ class AdminController extends Controller {
             'last_name' => $request->input('last_name'),
             'academic_title' => $request->input('academic_title'),
         ]);
-         Session::flash('flash_message', trans('translations.success'));
+        Session::flash('flash_message', trans('translations.success'));
         return redirect()->back();
     }
 
@@ -70,7 +70,7 @@ class AdminController extends Controller {
             'faculty_number' => $request->input('faculty_number'),
             'group_number' => $request->input('academic_group'),
         ]);
-         Session::flash('flash_message', trans('translations.success'));
+        Session::flash('flash_message', trans('translations.success'));
         return redirect()->back();
     }
 
@@ -129,6 +129,14 @@ class AdminController extends Controller {
         $professors = User::where('account_type', 2)->join('additional_data_professors', 'additional_data_professors.user_id', '=', 'users.id')
                         ->select('users.id', 'users.name', 'users.email', 'additional_data_professors.first_name', 'additional_data_professors.last_name', 'additional_data_professors.academic_title')->get();
         return view('admin.allProfessors', compact('professors'));
+    }
+
+    public function resetPassword($id) {
+        $user = User::where('id', $id)->first();
+        $user->password = bcrypt('123456');
+        $user->save();
+        Session::flash('flash_message', trans('translations.success'));
+        return redirect('/');
     }
 
 }

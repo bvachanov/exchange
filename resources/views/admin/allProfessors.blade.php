@@ -11,6 +11,7 @@
                     <th>{{trans('translations.name')}}</th>
                     <th>{{trans('translations.email')}}</th>
                     <th>{{trans('translations.delete')}}</th>  
+                    <th>{{trans('translations.resetPassword')}}</th> 
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                     <td><a href="{{url('user/show', [$p->id])}}">{{$p->academic_title.' '.$p->first_name. " ". $p->last_name}}</a></td>
                     <td>{{$p->email}}</td>
                     <td><a href="{{url('admin/user/delete', [$p->id])}}">{{trans('translations.delete')}}</a></td>
+                      <td><a href="{{url('admin/password/reset', [$p->id])}}">{{trans('translations.resetPassword')}}</a></td>
                 </tr>
                 @endforeach
             </tbody>

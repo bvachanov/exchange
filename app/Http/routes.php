@@ -85,3 +85,4 @@ Route::post('admin/student/register', 'AdminController@storeStudent');
 Route::get('admin/user/delete/{id}', 'AdminController@deleteUser');
 Route::get('admin/student/all', 'AdminController@getAllStudents');
 Route::get('admin/professor/all', 'AdminController@getAllProfessors');
+Route::get('admin/password/reset/{id}', 'AdminController@resetPassword');
